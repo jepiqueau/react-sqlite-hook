@@ -24,7 +24,7 @@ export const availableFeatures = {
     useStorage: isFeatureAvailable('CapacitorDataStorageSqlite', 'useStorageSQLite')
 }
 
-export function useStorageQLite(): StorageSQLiteResult {
+export function useStorageSQLite(): StorageSQLiteResult {
     const { CapacitorDataStorageSqlite } = Plugins;
     const platform = Capacitor.getPlatform();
     const storageSQLite = platform === "ios" || platform === "android" ? CapacitorDataStorageSqlite :
@@ -60,6 +60,7 @@ export function useStorageQLite(): StorageSQLiteResult {
     }, []);
 
     const setTable = useCallback(async (table: string) => {
+        table = table.length > 0 ? table : "storage_table";
         const r = await storageSQLite.setTable({table});
         if(r) {
             if( r.message && r.message.length > 0) {
