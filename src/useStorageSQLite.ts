@@ -14,14 +14,14 @@ interface StorageSQLiteResult extends AvailableResult {
     setItem: (key: string, value: string) => Promise<void>;
     removeItem: (key: string) => Promise<boolean>;
     clear: () => Promise<boolean>;
-    isKey: (key: string) => Promise<boolean | null>;
+    isKey: (key: string) => Promise<boolean>;
     getAllKeys: () => Promise<string[]>;
     getAllValues: () => Promise<string[]>;
     getAllKeysValues: () => Promise<any[]>;
     deleteStore: (options:any) => Promise<boolean>;
 }
 export const availableFeatures = {
-    useStorage: isFeatureAvailable('CapacitorDataStorageSqlite', 'useStorageSQLite')
+    useStorageSQLite: isFeatureAvailable('CapacitorDataStorageSqlite', 'useStorageSQLite')
 }
 
 export function useStorageSQLite(): StorageSQLiteResult {
@@ -29,7 +29,7 @@ export function useStorageSQLite(): StorageSQLiteResult {
     const platform = Capacitor.getPlatform();
     const storageSQLite = platform === "ios" || platform === "android" ? CapacitorDataStorageSqlite :
         platform === "electron" ? CDSSPlugin.CapacitorDataStorageSqliteElectron : CDSSPlugin.CapacitorDataStorageSqlite;
-    if (!availableFeatures.useStorage) {
+    if (!availableFeatures.useStorageSQLite) {
         return {
             openStore: featureNotAvailableError,
             setTable: featureNotAvailableError,

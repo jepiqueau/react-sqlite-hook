@@ -2,14 +2,21 @@
 
 A React Hook to help Capacitor developpers to use capacitor-data-storage-sqlite plugin in React or Ionic/React applications
 
-This is an alpha version
+This is a beta version
 
 ## Getting Started
 
 ```bash
 npm install --save capacitor-data-storage-sqlite
-npm install --save-dev react-data-storage-sqlite-hook@alpha
+npm install --save-dev react-data-storage-sqlite-hook
 ```
+
+## Applications demonstrating the use of the plugin and the react hook
+
+ - [react-datastoragesqlite-app] (https://github.com/jepiqueau/react-datastoragesqlite-app)
+
+ - [react-data-storage-sqlite-app-starter] (https://github.com/jepiqueau/react-data-storage-sqlite-app-starter)
+
 
 ## Usage
 Import the hook from its own path:
