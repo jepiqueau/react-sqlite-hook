@@ -170,7 +170,7 @@ export function useSQLite(): SQLiteResult {
             const r = await mSQLite.query({statement:statement,values:vals});
             console.log('result query ',r);
             if(r) {
-                if( typeof r.changes != 'undefined') {
+                if( typeof r.values != 'undefined') {
                     return r;
                 }
             } 
