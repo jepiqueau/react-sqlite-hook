@@ -1,1 +1,1 @@
-export * from './useStorageSQLite';
+export * from './useSQLite';

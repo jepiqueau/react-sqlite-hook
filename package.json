@@ -1,16 +1,15 @@
 {
-  "name": "react-data-storage-sqlite-hook",
-  "version": "0.0.1-beta.3",
-  "description": "React Hook for Capacitor Data Storage SQLite",
+  "name": "react-sqlite-hook",
+  "version": "0.0.1-alpha.1",
+  "description": "React Hook for @Capacitor-community/sqlite plugin",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jepiqueau/react-data-storage-sqlite-hook.git"
+    "url": "git+https://github.com/jepiqueau/react-sqlite-hook.git"
   },
   "keywords": [
     "React",
     "Hook",
     "Capacitor",
-    "Storage",
     "SQLite"
   ],
   "main": "dist/esm/index.js",
@@ -47,11 +46,11 @@
     "@capacitor/core": "^2.0.0"
   },
   "devDependencies": {
+    "@capacitor-community/sqlite": "^2.4.0",
     "@capacitor/core": "^2.0.0",
     "@testing-library/react-hooks": "^3.2.1",
     "@types/jest": "^24.0.23",
     "@types/react-test-renderer": "^16.9.1",
-    "capacitor-data-storage-sqlite": "^2.3.0",
     "conventional-changelog": "^3.1.4",
     "jest": "^24.9.0",
     "jest-environment-jsdom-fourteen": "^0.1.0",
@@ -86,7 +85,7 @@
   "author": "Quéau Jean Pierre",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jepiqueau/react-data-storage-sqlite-hook/issues"
+    "url": "https://github.com/jepiqueau/react-sqlite-hook/issues"
   },
-  "homepage": "https://github.com/jepiqueau/react-data-storage-sqlite-hook#readme"
+  "homepage": "https://github.com/jepiqueau/react-sqlite-hook#readme"
 }
