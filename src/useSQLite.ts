@@ -6,16 +6,13 @@ import { AvailableResult, notAvailable } from './util/models';
 import { isFeatureAvailable, featureNotAvailableError } from './util/feature-check';
 import * as CCSPlugin from '@capacitor-community/sqlite';
 
-interface SQLSet {
-    statement: string;
-    values : [any];
-}
+
 interface SQLiteResult extends AvailableResult {
     openDB: (dbName:string,encrypted?:boolean,mode?:string) => Promise<{result?: boolean, message?: string}>;
     createSyncTable: () => Promise<{changes?:{changes:number}}>;
     close: (dbName: string) => Promise<{result?: boolean, message?: string}>;
     execute: (statements: string) => Promise<{changes?:{changes:number},message?:string}>;
-    executeSet: (set:[SQLSet]) => Promise<{changes?:{changes:number,lastId:number},message?:string}>;
+    executeSet: (set:Array<any>) => Promise<{changes?:{changes:number,lastId:number},message?:string}>;
     run: (statement:string,values?:Array<any>) => Promise<{changes?:{changes:number,lastId:number},message?:string}>;
     query: (statement:string,values?:Array<string>) => Promise<{values?:Array<any>,message?:string}>
     isDBExists: (dbName: string) => Promise<{result?: boolean, message?: string}>;
@@ -124,10 +121,10 @@ export function useSQLite(): SQLiteResult {
         return {changes:{changes:0},message:"Statements is empty"};
     }, []);
     /**
-     * Execute a set of Raw Statements as Array<SQLSet>
-     * @param set Array<SQLSet> 
+     * Execute a set of Raw Statements as Array<any>
+     * @param set Array<any> 
      */
-    const executeSet = useCallback(async (set:[SQLSet]) => {
+    const executeSet = useCallback(async (set:Array<any>) => {
         if(set.length > 0) {
             const r = await mSQLite.executeSet({set:set});
             console.log('result executeSet ',r);
