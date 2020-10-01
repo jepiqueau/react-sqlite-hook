@@ -4,7 +4,8 @@ import { useCallback } from 'react';
 import { Capacitor, Plugins } from '@capacitor/core';
 import { AvailableResult, notAvailable } from './util/models';
 import { isFeatureAvailable, featureNotAvailableError } from './util/feature-check';
-import * as CCSPlugin from '@capacitor-community/sqlite';
+//import * as CCSPlugin from '@capacitor-community/sqlite';
+import '@capacitor-community/sqlite';
 
 
 interface SQLiteResult extends AvailableResult {
@@ -29,11 +30,22 @@ export const availableFeatures = {
 export function useSQLite(): SQLiteResult {
     const { CapacitorSQLite } = Plugins;
     const platform = Capacitor.getPlatform();
-    const mSQLite = platform === "ios" || platform === "android" ? CapacitorSQLite :
-        platform === "electron" ? CCSPlugin.CapacitorSQLiteElectron : CCSPlugin.CapacitorSQLite;
+    const mSQLite: any = CapacitorSQLite;
     const availableFeaturesN = {
         useSQLite: isFeatureAvailable('CapacitorSQLite', 'useSQLite')
     }
+    const androidPremissions = async () => {
+        console.log("%%% in androidPremissions platform " + platform + "%%%");
+        try {
+            await mSQLite.requestPermissions();
+            return { result: true };
+        } catch (e) {
+            console.log("Error requesting permissions " + e);
+            return { result: false,
+                message: "Error requesting permissions " + e};
+        }   
+    }
+  
     if (!availableFeaturesN.useSQLite) {
         return {
             openDB: featureNotAvailableError,
@@ -59,6 +71,12 @@ export function useSQLite(): SQLiteResult {
      * @param _mode string optional
      */  
     const openDB = useCallback(async (dbName:string,encrypted?:boolean,mode?:string) => {
+        console.log("%%% in openDB platform " + platform + "%%%");
+        if(platform === "android") { 
+            const permissions: any = await androidPremissions();
+            console.log("%%% in openDB permissions " + JSON.stringify(permissions) + "%%%");
+            if(!permissions.result) return permissions;
+        }      
         if (typeof dbName === 'undefined') {
             return { result: false, message: 'Must provide a database name'};
         }      

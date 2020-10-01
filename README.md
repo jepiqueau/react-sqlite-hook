@@ -2,7 +2,6 @@
 
 A React Hook to help Capacitor developpers to use `@capacitor-community/sqlite` plugin in React or Ionic/React applications
 
-This is an alpha version
 
 ## Getting Started in your Ionic/React App
 
