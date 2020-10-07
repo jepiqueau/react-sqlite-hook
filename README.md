@@ -6,7 +6,7 @@ A React Hook to help Capacitor developpers to use `@capacitor-community/sqlite` 
 ## Getting Started in your Ionic/React App
 
 ```bash
-npm install --save @capacitor-community/sqlite
+npm install --save @capacitor-community/sqlite@latest
 npm install --save-dev react-sqlite-hook
 ```
 

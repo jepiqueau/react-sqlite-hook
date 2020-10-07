@@ -44,16 +44,16 @@
   "peerDependencies": {
     "react": "^16.13.1",
     "@capacitor/core": "^2.4.2",
-    "@capacitor-community/sqlite": "^2.4.2-2"
+    "@capacitor-community/sqlite": "^2.4.2-4"
   },
   "devDependencies": {
-    "@capacitor-community/sqlite": "^2.4.2-2",
+    "@capacitor-community/sqlite": "^2.4.2-4",
     "@capacitor/core": "^2.4.2",
     "@testing-library/react-hooks": "^3.4.2",
     "@types/jest": "^24.0.23",
     "@types/react-test-renderer": "^16.9.3",
     "conventional-changelog": "^3.1.4",
-    "jest": "^24.9.0",
+    "jest": "^26.5.2",
     "jest-environment-jsdom-fourteen": "^0.1.0",
     "np": "^6.5.0",
     "react": "^16.13.1",

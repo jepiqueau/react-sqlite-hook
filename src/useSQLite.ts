@@ -1,10 +1,7 @@
-//Inspired from https://github.com/capacitor-community/react-hooks/blob/master/src/storage/
-
 import { useCallback } from 'react';
 import { Capacitor, Plugins } from '@capacitor/core';
 import { AvailableResult, notAvailable } from './util/models';
 import { isFeatureAvailable, featureNotAvailableError } from './util/feature-check';
-//import * as CCSPlugin from '@capacitor-community/sqlite';
 import '@capacitor-community/sqlite';
 
 
@@ -26,7 +23,9 @@ interface SQLiteResult extends AvailableResult {
 export const availableFeatures = {
     useSQLite: isFeatureAvailable('CapacitorSQLite', 'useSQLite')
 }
-
+/**
+ * useSQLite Hook
+ */
 export function useSQLite(): SQLiteResult {
     const { CapacitorSQLite } = Plugins;
     const platform = Capacitor.getPlatform();
