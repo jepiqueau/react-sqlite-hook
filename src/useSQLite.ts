@@ -18,7 +18,8 @@ interface VersionUpgrade {
 }
 
 interface SQLiteResult extends AvailableResult {
-    openDB: (dbName: string,encrypted?: boolean,mode?: string)
+    openDB: (dbName: string,encrypted?: boolean,mode?: string,
+            version?: number)
                 => Promise<{result?: boolean, message?: string}>;
     createSyncTable: ()
                 => Promise<{changes?: {changes:number}}>;
