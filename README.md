@@ -198,11 +198,6 @@ const Tab2: React.FC = () => {
           </IonToolbar>
         </IonHeader>
         <IonList>
-          <IonItem routerLink="/tab2/details">
-            <IonLabel>
-              <h2>Go to detail</h2>
-            </IonLabel>
-          </IonItem>
           <IonItem>
             <IonButton onClick={startTest} expand="block">SQLite Test</IonButton>
           </IonItem>
