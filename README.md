@@ -1,9 +1,31 @@
-# React Hook for @Capacitor-community/sqlite
+<p align="center"><br><img src="https://avatars3.githubusercontent.com/u/16580653?v=4" width="128" height="128" /></p>
 
-A React Hook to help Capacitor developpers to use `@capacitor-community/sqlite` plugin in React or Ionic/React applications
+<h3 align="center">React Hook for <code>@capacitor-community/sqlite</code> plugin</h3>
+<p align="center"><strong><code>react-sqlite-hook</code></strong></p>
+<p align="center">
+  A React Hook to help Capacitor developpers to use <strong><code>@capacitor-community/sqlite</code></strong> plugin in React or Ionic/React applications
+</p>
+
+<br>
+<p align="center">
+    <img src="https://img.shields.io/maintenance/yes/2020?style=flat-square" />
+    <a href="https://www.npmjs.com/package/react-sqlite-hook"><img src="https://img.shields.io/npm/l/react-sqlite-hook?style=flat-square" /></a>
+<br>
+  <a href="https://www.npmjs.com/package/react-sqlite-hook"><img src="https://img.shields.io/npm/dw/react-sqlite-hook?style=flat-square" /></a>
+  <a href="https://www.npmjs.com/package/react-sqlite-hook"><img src="https://img.shields.io/npm/v/react-sqlite-hook?style=flat-square" /></a>
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+<a href="#contributors-"><img src="https://img.shields.io/badge/all%20contributors-1-orange?style=flat-square" /></a>
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
+</p>
+
+## Maintainers
+
+| Maintainer        | GitHub                                    | Social |
+| ----------------- | ----------------------------------------- | ------ |
+| Quéau Jean Pierre | [jepiqueau](https://github.com/jepiqueau) |        |
 
 
-## Getting Started in your Ionic/React App
+## Installation
 
 ```bash
 npm install --save @capacitor-community/sqlite@latest
@@ -39,7 +61,7 @@ const Tab2: React.FC = () => {
     setStart(prev => prev + 1); 
   }
   const {openDB, createSyncTable, close, execute, executeSet, run, query,
-    isDBExists, deleteDB, isJsonValid, importFromJson, exportToJson, setSyncDate} = useSQLite();
+    isDBExists, deleteDB, isJsonValid, importFromJson, exportToJson, setSyncDate, requestPermissions} = useSQLite();
   useEffect( () => {
     async function testDatabaseNoEncryption(): Promise<Boolean>  {
       setLog((log) => log.concat("*** Starting testDatabaseNoEncryption ***\n"));
@@ -129,20 +151,38 @@ const Tab2: React.FC = () => {
       }
       setLog((log) => log.concat("*** Ending testDatabaseNoEncryption ***\n"));
       return true;
-  }
+    }
+    async function permissionsGranted(): Promise<boolean> {
+      const canGo: boolean = true;
+      if(platform === "android") {
+        const res = await requestPermissions();
+        if(!res.result) {
+          console.log(" Permissions not granted");
+        }
+      }
+      return canGo;
+    }
+
     if(start > 0) {
-      testDatabaseNoEncryption().then(res => {
+      permissionsGranted().then(res=> {
         if(res) {
-          setLog((log) => log.concat("*** The set of tests was successful ***\n"));
+
+          testDatabaseNoEncryption().then(res => {
+            if(res) {
+              setLog((log) => log.concat("*** The set of tests was successful ***\n"));
+            } else {
+              setLog((log) => log.concat("*** The set of tests failed ***\n"));
+            }
+          });
         } else {
-          setLog((log) => log.concat("*** The set of tests failed ***\n"));
+          setLog((log) => log.concat("\n* The set of tests failed *\n"));
         }
       });
 
-
     }
-  }, [openDB, createSyncTable, close, execute, executeSet, run, query, isDBExists, deleteDB,
-    isJsonValid, importFromJson, exportToJson, setSyncDate, start]);   
+  }, [openDB, createSyncTable, close, execute, executeSet, run, query,
+    isDBExists, deleteDB, isJsonValid, importFromJson, exportToJson,
+    setSyncDate, requestPermissions, start, platform]);   
 
   return (
     <IonPage>
@@ -224,5 +264,26 @@ export const dropTablesTablesNoEncryption: string = `
     PRAGMA foreign_keys = ON;
 `;
 ```
+
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/jepiqueau"><img src="https://avatars3.githubusercontent.com/u/16580653?v=4" width="100px;" alt=""/><br /><sub><b>Jean Pierre Quéau</b></sub></a><br /><a href="https://github.com/jepiqueau/react-sqlite-hook/commits?author=jepiqueau" title="Code">💻</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-enable -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
+
 
 

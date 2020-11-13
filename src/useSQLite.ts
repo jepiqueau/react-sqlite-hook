@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { Capacitor, Plugins } from '@capacitor/core';
 import { AvailableResult, notAvailable } from './util/models';
 import { isFeatureAvailable, featureNotAvailableError } 
@@ -51,6 +51,8 @@ interface SQLiteResult extends AvailableResult {
                 => Promise<{result?: boolean, message?: string}>;
     addUpgradeStatement: (dbName: string, upgrade: VersionUpgrade)
                 => Promise<{result?: boolean, message?: string}>;
+    requestPermissions: () 
+                => Promise<{result?: boolean, message?: string}>;
 }
 export const availableFeatures = {
     useSQLite: isFeatureAvailable('CapacitorSQLite', 'useSQLite')
@@ -62,12 +64,12 @@ export function useSQLite(): SQLiteResult {
     const { CapacitorSQLite } = Plugins;
     const platform = Capacitor.getPlatform();
     const mSQLite: any = CapacitorSQLite;
+    let permissionsListener: any = null;
+
     const availableFeaturesN = {
         useSQLite: isFeatureAvailable('CapacitorSQLite', 'useSQLite')
     }
-    const androidPremissions = async () => {
-        console.log("%%% in androidPremissions platform " 
-                    + platform + "%%%");
+    const androidPermissions = async () => {
         try {
             await mSQLite.requestPermissions();
             return { result: true };
@@ -94,9 +96,39 @@ export function useSQLite(): SQLiteResult {
             exportToJson: featureNotAvailableError,
             setSyncDate: featureNotAvailableError,
             addUpgradeStatement: featureNotAvailableError,
+            requestPermissions: featureNotAvailableError,
             ...notAvailable
         };
     }
+    useEffect(() => {
+        return () => {
+            if(permissionsListener) mSQLite.removeAllListeners();
+        }
+    }, []);
+
+    /**
+     * 
+     */
+    const requestPermissions = useCallback(async ():Promise<any> => {
+        return new Promise(async (resolve) => {
+            if(platform === "android") { 
+
+                permissionsListener = mSQLite.addListener(
+                        'androidPermissionsRequest',async (e: any) => {
+                    if(e.permissionGranted === 0) {
+                        resolve({result: false, message:
+                            "Error Permissions not granted"});
+                    } else {
+                        resolve({result: true});
+                    }
+                });
+                await androidPermissions();
+            } else {
+                resolve({result: false, message:
+                    "Error Permissions not required for this platform"});
+            }
+        });
+    }, []);
     /**
      * Open a Database
      * @param dbName string
@@ -107,31 +139,25 @@ export function useSQLite(): SQLiteResult {
     const openDB = useCallback(async (dbName: string,
                                       encrypted?: boolean,
                                       mode?: string,
-                                      version?: number) => {
-        console.log("%%% in openDB platform " + platform + "%%%");
-        if(platform === "android") { 
-            const permissions: any = await androidPremissions();
-            console.log("%%% in openDB permissions " 
-                        + JSON.stringify(permissions) + "%%%");
-            if(!permissions.result) return permissions;
-        }      
-        if (typeof dbName === 'undefined') {
-            return { result: false,
-                            message: 'Must provide a database name'};
-        }      
-        const mDatabase: string = dbName;
-        const mVersion: number = version ? version : 1;
-        const mEncrypted: boolean = encrypted ? encrypted : false;
-        const mMode: string = mode ? mode : "no-encryption";
-        const r = await mSQLite.open({database: mDatabase,
-                                      encrypted: mEncrypted,
-                                      mode: mMode, version: mVersion});
-        if(r) {
-            if( typeof r.result != 'undefined') {
-                return r;
+                                      version?: number): Promise<any> => {
+            console.log("%%% in openDB platform " + platform + "%%%");
+            if (typeof dbName === 'undefined') {
+                return { result: false,
+                                message: 'Must provide a database name'};
+            }      
+            const mDatabase: string = dbName;
+            const mVersion: number = version ? version : 1;
+            const mEncrypted: boolean = encrypted ? encrypted : false;
+            const mMode: string = mode ? mode : "no-encryption";
+            const r = await mSQLite.open({database: mDatabase,
+                encrypted: mEncrypted,
+                mode: mMode, version: mVersion});
+            if(r) {
+                if( typeof r.result != 'undefined') {
+                    return r;
+                }
             }
-        }
-        return {result: false, message: "Error in openDB"};
+            return {result: false, message: "Error in openDB"};
     }, []);
     /**
      * Create synchronisation table
@@ -383,5 +409,5 @@ export function useSQLite(): SQLiteResult {
     return { openDB, createSyncTable, close, execute, executeSet, run,
         query, isDBExists, deleteDB, isJsonValid, importFromJson,
         exportToJson, setSyncDate, addUpgradeStatement,
-        isAvailable: true };
+        requestPermissions, isAvailable: true };
 }

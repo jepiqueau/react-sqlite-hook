@@ -1,3 +1,9 @@
+## 0.0.5 (2020-11-13)
+
+### Added Features
+
+- Add requestPermissions method for Android
+
 ## 0.0.4 (2020-10-23)
 
 ### Bug Fixes
