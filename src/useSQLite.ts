@@ -100,12 +100,6 @@ export function useSQLite(): SQLiteResult {
             ...notAvailable
         };
     }
-    useEffect(() => {
-        return () => {
-            if(permissionsListener) mSQLite.removeAllListeners();
-        }
-    }, []);
-
     /**
      * 
      */
@@ -116,9 +110,11 @@ export function useSQLite(): SQLiteResult {
                 permissionsListener = mSQLite.addListener(
                         'androidPermissionsRequest',async (e: any) => {
                     if(e.permissionGranted === 0) {
+                        permissionsListener.remove();
                         resolve({result: false, message:
                             "Error Permissions not granted"});
                     } else {
+                        permissionsListener.remove();
                         resolve({result: true});
                     }
                 });
