@@ -1,8 +1,14 @@
-## 0.0.6 (2020-11-14)
+## 0.0.7 (2020-11-14)
 
 ### Bug Fixes
 
 - Fix requestPermissions remove listener for Android
+
+## 0.0.6 (2020-11-13)
+
+### Bug Fixes
+
+- Fix readme
 
 ## 0.0.5 (2020-11-13)
 
