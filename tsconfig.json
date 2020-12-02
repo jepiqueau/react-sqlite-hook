@@ -24,7 +24,7 @@
       "sourceMap": true,
       "target": "es2015"
     },
-    "include": [
+    "files": [
       "src/index.ts"
     ]
   }

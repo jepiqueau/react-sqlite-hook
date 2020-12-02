@@ -1,3 +1,21 @@
+## 1.0.0-alpha.1 (2020-12-02) REFACTOR
+
+### Chore
+
+- @capacitor-community/sqlite@refactor
+
+### Added Features
+
+ - echo
+ - createConnection
+ - closeConnection
+ - retrieveConnection
+ - closeAllConnections
+ - retrieveAllConnections
+ - addUpgradeStatement
+ - requestPermissions
+
+
 ## 0.0.7 (2020-11-14)
 
 ### Bug Fixes
