@@ -48,7 +48,7 @@
     "@capacitor-community/sqlite": "refactor"
   },
   "devDependencies": {
-    "@capacitor-community/sqlite": "refactor",
+    "@capacitor-community/sqlite": "^2.9.0-alpha.5",
     "@capacitor/core": "^2.4.3",
     "@capacitor/docgen": "0.0.10",
     "@testing-library/react-hooks": "^3.4.2",

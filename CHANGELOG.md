@@ -1,3 +1,9 @@
+## 1.0.0-alpha.2 (2020-12-03) REFACTOR
+
+### Chore
+
+- @capacitor-community/sqlite@2.9.0-alpha.5
+
 ## 1.0.0-alpha.1 (2020-12-02) REFACTOR
 
 ### Chore
