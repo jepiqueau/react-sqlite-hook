@@ -10,8 +10,6 @@ const allTrue = {
 
 const featureMap = {
   CapacitorSQLite: {
-    echo: {...allTrue, web: false},
-    createConnection: {...allTrue, web: false},
     useSQLite: {...allTrue, web: false},    
   }
 }

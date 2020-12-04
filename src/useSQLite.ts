@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useMemo } from 'react';
 import { Capacitor, Plugins } from '@capacitor/core';
 import { AvailableResult, notAvailable } from './util/models';
 import { isFeatureAvailable, featureNotAvailableError } 
@@ -7,10 +7,11 @@ import '@capacitor-community/sqlite';
 import { SQLiteDBConnection,
          SQLiteConnection } from '@capacitor-community/sqlite';
 
+export { SQLiteDBConnection }
 /**
  * SQLite Hook Interface
  */
-interface ISQLiteHook extends AvailableResult{
+interface SQLiteHook extends  AvailableResult {
     /**
      * Echo a value
      * @param value
@@ -18,6 +19,12 @@ interface ISQLiteHook extends AvailableResult{
      * @since 1.0.0 refactor
      */
     echo(value: string): Promise<{value: string}>;
+    /**
+     * Get platform
+     * @returns Promise<{platform: string}>
+     * @since 1.0.0 refactor
+     */
+    getPlatform(): Promise<{platform: string}>;
     /**
      * Add an Upgrade Statement to Update Database Version
      * @param dbName database name
@@ -37,10 +44,10 @@ interface ISQLiteHook extends AvailableResult{
      * @since 1.0.0 refactor
      */
     createConnection(
-      database: string,
-      encrypted?: boolean,
-      mode?: string,
-      version?: number,
+        database: string,
+        encrypted?: boolean,
+        mode?: string,
+        version?: number,
     ): Promise<SQLiteDBConnection | Result | null>;
     /**
      * Retrieve an existing database connection
@@ -49,7 +56,7 @@ interface ISQLiteHook extends AvailableResult{
      * @since 1.0.0 refactor
      */
     retrieveConnection(
-      database: string,
+        database: string,
     ): Promise<SQLiteDBConnection | Result | null>;
     /**
      * Retrieve all database connections
@@ -76,69 +83,60 @@ interface ISQLiteHook extends AvailableResult{
      * @since 1.0.0 refactor
      */
     requestPermissions(): Promise<Result>;
-  
 }
+
 interface MySet {
     statement?: string;
     values?: any[];
 }
-  
+
 interface VersionUpgrade {
     fromVersion: number;
     toVersion: number;
     statement: string;
     set?: MySet[]; 
 }
-  
-interface Result {
+
+export interface Result {
     result?: boolean;
     message?: string
 }
-    
 /**
  * useSQLite Hook
  */
-export function useSQLite(): ISQLiteHook {
+export const useSQLite = (): SQLiteHook  => {
+
     const { CapacitorSQLite } = Plugins;
     const platform = Capacitor.getPlatform();
     const sqlitePlugin: any = CapacitorSQLite;
-    const mSQLite: SQLiteConnection = new SQLiteConnection(sqlitePlugin);
-    let permissionsListener: any = null;
+    const mSQLite = useMemo(() => {
+        return new SQLiteConnection(sqlitePlugin);
+    },[sqlitePlugin])
+
 
     const availableFeaturesN = {
         useSQLite: isFeatureAvailable('CapacitorSQLite', 'useSQLite')
     }
-    const androidPermissions = async () => {
-        try {
-            await sqlitePlugin.requestPermissions();
-            return { result: true };
-        } catch (e) {
-            console.log("Error requesting permissions " + e);
-            return { result: false,
-                message: "Error requesting permissions " + e};
-        }   
-    }
-  
-    if (!availableFeaturesN.useSQLite) {
-        return {
-            echo: featureNotAvailableError,
-            createConnection: featureNotAvailableError,
-            closeConnection: featureNotAvailableError,
-            retrieveConnection: featureNotAvailableError,
-            retrieveAllConnections: featureNotAvailableError,
-            closeAllConnections: featureNotAvailableError,
-            addUpgradeStatement: featureNotAvailableError,
-            requestPermissions: featureNotAvailableError,
-            ...notAvailable
-        };
-    }
+
     /**
      * Request Permissions
      */
     const requestPermissions = useCallback(async ():Promise<any> => {
         return new Promise(async (resolve) => {
+            console.log("$$$$ platform " + platform)
             if(platform === "android") { 
-
+                const androidPermissions = async () => {
+                    console.log("$$$$ going to ask for permissions " + platform)
+                    try {
+                        await sqlitePlugin.requestPermissions();
+                        return { result: true };
+                    } catch (e) {
+                        console.log("Error requesting permissions " + e);
+                        return { result: false,
+                            message: "Error requesting permissions " + e};
+                    }   
+                }
+                let permissionsListener: any = null;
                 permissionsListener = sqlitePlugin.addListener(
                         'androidPermissionsRequest',async (e: any) => {
                     if(e.permissionGranted === 0) {
@@ -156,17 +154,20 @@ export function useSQLite(): ISQLiteHook {
                     "Error Permissions not required for this platform"});
             }
         });
-    }, []);
+    }, [platform, sqlitePlugin]);
+
     const echo = useCallback(async (value: string): Promise<any> => {
-        const r = await mSQLite.echo(value);
-        if(r) {
-            if( typeof r.value != 'undefined') {
-                return r;
-            }
+        if(value) {
+            return {value: value};
         } else {
             return {value: null};
         }
     }, []);
+
+    const getPlatform = useCallback(async (): Promise<any> => {
+            return {platform: platform};
+    }, [platform]);
+
     /**
      * Create a Connection to Database
      * @param dbName string
@@ -175,26 +176,26 @@ export function useSQLite(): ISQLiteHook {
      * @param version number optional
      */  
     const createConnection = useCallback(async (dbName: string,
-                                                encrypted?: boolean,
-                                                mode?: string,
-                                                version?: number)
-                        : Promise<SQLiteDBConnection| Result | null> => {
-            if (typeof dbName === 'undefined') {
-                return { result: false,
-                                message: 'Must provide a database name'};
-            } 
-            const mDatabase: string = dbName;
-            const mVersion: number = version ? version : 1;
-            const mEncrypted: boolean = encrypted ? encrypted : false;
-            const mMode: string = mode ? mode : "no-encryption";
-            const r = await mSQLite.createConnection(
-                            mDatabase, mEncrypted, mMode, mVersion);
+        encrypted?: boolean,
+        mode?: string,
+        version?: number)
+                : Promise<SQLiteDBConnection| Result | null> => {
+        if (dbName == null || dbName.length === 0) {
+        return { result: false,
+        message: 'Must provide a database name'};
+        } 
+        const mDatabase: string = dbName;
+        const mVersion: number = version ? version : 1;
+        const mEncrypted: boolean = encrypted ? encrypted : false;
+        const mMode: string = mode ? mode : "no-encryption";
+        const r = await mSQLite.createConnection(
+                        mDatabase, mEncrypted, mMode, mVersion);
 
-            if(r) {
-                return r;
-            }
-            return null;
-    }, []);
+        if(r) {
+            return r;
+        }
+        return null;
+    }, [mSQLite]);
     /**
      * Close the Connection to the Database
      * @param dbName string
@@ -210,7 +211,7 @@ export function useSQLite(): ISQLiteHook {
             return {result: false, message: "Error in closeConnection"};  
         }
         return {result: false, message: "Must provide a database name"};
-    }, []);
+    }, [mSQLite]);
     /**
      * Retrieve a Connection to the Database
      * @param dbName string
@@ -224,19 +225,18 @@ export function useSQLite(): ISQLiteHook {
             return null;  
         }
         return {result: false, message: "Must provide a database name"};
-    }, []);
+    }, [mSQLite]);
     /**
      * Retrieve all Connections to Databases
      * 
      */
     const retrieveAllConnections = useCallback(async () => {
             const r = await mSQLite.retrieveAllConnections();
-            var ret: any = {};
             if(r) {
-               return r;
+            return r;
             } 
             return null;  
-    }, []);
+    }, [mSQLite]);
     /**
      * Close All Connections to Databases
      * @param dbName string
@@ -249,7 +249,7 @@ export function useSQLite(): ISQLiteHook {
                 }
             } 
             return {result: false, message: "Error in closeConnection"};  
-    }, []);
+    }, [mSQLite]);
     /**
      * Add the upgrade Statement for database version upgrading
      * @param dbName string 
@@ -272,8 +272,8 @@ export function useSQLite(): ISQLiteHook {
         if(dbName.length > 0) {
             const r = await mSQLite
                 .addUpgradeStatement(dbName, upgrade.fromVersion,
-                                     upgrade.toVersion, upgrade.statement,
-                                     upgrade.set)
+                                    upgrade.toVersion, upgrade.statement,
+                                    upgrade.set)
             if(r) {
                 if( typeof r.result != 'undefined') {
                     return r;
@@ -285,9 +285,26 @@ export function useSQLite(): ISQLiteHook {
             return {result: false,
                     message:"Must provide a database name"};
         }
+    }, [mSQLite]);
 
-    }, []);
-    return { echo, createConnection, closeConnection, retrieveConnection,
-            retrieveAllConnections, closeAllConnections,
-            addUpgradeStatement, requestPermissions, isAvailable: true };
+
+    if (!availableFeaturesN.useSQLite) {
+        return {
+            echo: featureNotAvailableError,
+            getPlatform: featureNotAvailableError,
+            createConnection: featureNotAvailableError,
+            closeConnection: featureNotAvailableError,
+            retrieveConnection: featureNotAvailableError,
+            retrieveAllConnections: featureNotAvailableError,
+            closeAllConnections: featureNotAvailableError,
+            addUpgradeStatement: featureNotAvailableError,
+            requestPermissions: featureNotAvailableError,
+            ...notAvailable
+        };
+    } else {
+        return {echo, getPlatform, createConnection, closeConnection,
+            retrieveConnection, retrieveAllConnections, closeAllConnections,
+            addUpgradeStatement, requestPermissions, isAvailable: true};
+    }
+
 }

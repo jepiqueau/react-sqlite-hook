@@ -1,3 +1,14 @@
+## 1.0.0-alpha.3 (2020-12-04) REFACTOR
+
+### Added Features
+
+ - getPlatform
+
+### Bug Fixes
+
+ - fix new SQLiteConnection with useMemo()
+
+
 ## 1.0.0-alpha.2 (2020-12-03) REFACTOR
 
 ### Chore

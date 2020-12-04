@@ -10,6 +10,7 @@
 <docgen-index>
 
 * [`echo(...)`](#echo)
+* [`getPlatform()`](#getplatform)
 * [`addUpgradeStatement(...)`](#addupgradestatement)
 * [`createConnection(...)`](#createconnection)
 * [`retrieveConnection(...)`](#retrieveconnection)
@@ -41,6 +42,21 @@ Echo a value
 | **`value`** | <code>string</code> |
 
 **Returns:** <code>Promise&lt;{ value: string; }&gt;</code>
+
+**Since:** 1.0.0 refactor
+
+--------------------
+
+
+### getPlatform()
+
+```typescript
+getPlatform() => Promise<{ platform: string; }>
+```
+
+Get platform
+
+**Returns:** <code>Promise&lt;{ platform: string; }&gt;</code>
 
 **Since:** 1.0.0 refactor
 

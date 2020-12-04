@@ -24,7 +24,7 @@
     "transpile": "tsc --module ES2015 --target es2017 --outDir dist",
     "clean": "rimraf dist",
     "build-old": "node scripts/build.js",
-    "docgen": "docgen --api ISQLiteHook --output-readme docs/APIHook.md",
+    "docgen": "docgen --api SQLiteHook --output-readme docs/APIHook.md",
     "test": "jest"
   },
   "eslintConfig": {
