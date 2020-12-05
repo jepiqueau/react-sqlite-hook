@@ -35,10 +35,10 @@ npm install --save-dev react-sqlite-hook@refactor
 
 ## Applications demonstrating the use of the plugin and the react hook
 
- - [react-sqlite-app-starter] (https://github.com/jepiqueau/react-sqlite-app-starter)
+ - [react-sqlite-app-starter] (https://github.com/jepiqueau/react-sqlite-app-starter/tree/refactor)
 
 
-## Usage (to come)
+## Usage 
 
 - in the project `app.tsx` file import the sqlite hook
 
@@ -156,6 +156,11 @@ const NoEncryption: React.FC = () => {
             if(res.values.length !== 2) return false;
             setLog((log) => log
                     .concat(" Select with filter on age successful\n"));          
+            // Close Connection NoEncryption        
+            res = await sqlite.closeConnection("NoEncryption"); 
+            if(!res.result) {
+                return false; 
+            }
     
           return true;
         }

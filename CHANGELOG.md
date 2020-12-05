@@ -1,3 +1,10 @@
+## 1.0.0-alpha.4 (2020-12-05) REFACTOR
+
+### Bug Fixes
+
+- Fix readme
+
+
 ## 1.0.0-alpha.3 (2020-12-04) REFACTOR
 
 ### Added Features
