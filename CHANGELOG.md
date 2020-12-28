@@ -1,3 +1,14 @@
+## 1.0.0-beta.1 (2020-12-28) REFACTOR
+
+## Chore
+
+- @capacitor/core@2.4.5
+- @capacitor-community/sqlite@2.9.0-beta.1
+
+## Added Features
+
+- Add importFromJson and isJsonValid methods
+
 ## 1.0.0-alpha.4 (2020-12-05) REFACTOR
 
 ### Bug Fixes

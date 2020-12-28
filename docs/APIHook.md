@@ -17,6 +17,8 @@
 * [`retrieveAllConnections()`](#retrieveallconnections)
 * [`closeConnection(...)`](#closeconnection)
 * [`closeAllConnections()`](#closeallconnections)
+* [`importFromJson(...)`](#importfromjson)
+* [`isJsonValid(...)`](#isjsonvalid)
 * [`requestPermissions()`](#requestpermissions)
 * [Interfaces](#interfaces)
 
@@ -173,6 +175,44 @@ Close all database connections
 --------------------
 
 
+### importFromJson(...)
+
+```typescript
+importFromJson(jsonstring: string) => Promise<capSQLiteChanges>
+```
+
+Import a database From a JSON
+
+| Param            | Type                | Description |
+| ---------------- | ------------------- | ----------- |
+| **`jsonstring`** | <code>string</code> | string      |
+
+**Returns:** <code>Promise&lt;<a href="#capsqlitechanges">capSQLiteChanges</a>&gt;</code>
+
+**Since:** 2.9.0 refactor
+
+--------------------
+
+
+### isJsonValid(...)
+
+```typescript
+isJsonValid(jsonstring: string) => Promise<Result>
+```
+
+Check the validity of a JSON Object
+
+| Param            | Type                | Description |
+| ---------------- | ------------------- | ----------- |
+| **`jsonstring`** | <code>string</code> | string      |
+
+**Returns:** <code>Promise&lt;<a href="#result">Result</a>&gt;</code>
+
+**Since:** 2.9.0 refactor
+
+--------------------
+
+
 ### requestPermissions()
 
 ```typescript
@@ -215,6 +255,22 @@ Request Permissions
 | --------------- | ------------------- |
 | **`statement`** | <code>string</code> |
 | **`values`**    | <code>any[]</code>  |
+
+
+#### capSQLiteChanges
+
+| Prop          | Type                                        | Description                               |
+| ------------- | ------------------------------------------- | ----------------------------------------- |
+| **`changes`** | <code><a href="#changes">Changes</a></code> | a returned <a href="#changes">Changes</a> |
+| **`message`** | <code>string</code>                         | a returned message                        |
+
+
+#### Changes
+
+| Prop          | Type                | Description                                          |
+| ------------- | ------------------- | ---------------------------------------------------- |
+| **`changes`** | <code>number</code> | the number of changes from an execute or run command |
+| **`lastId`**  | <code>number</code> | the lastId created from a run command                |
 
 </docgen-api>
 

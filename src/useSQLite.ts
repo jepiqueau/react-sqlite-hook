@@ -5,7 +5,7 @@ import { isFeatureAvailable, featureNotAvailableError }
                                     from './util/feature-check';
 import '@capacitor-community/sqlite';
 import { SQLiteDBConnection,
-         SQLiteConnection } from '@capacitor-community/sqlite';
+         SQLiteConnection, capSQLiteChanges } from '@capacitor-community/sqlite';
 
 export { SQLiteDBConnection }
 /**
@@ -78,6 +78,21 @@ interface SQLiteHook extends  AvailableResult {
      */
     closeAllConnections(): Promise<Result>;
     /**
+     * Import a database From a JSON
+     * @param jsonstring string
+     * @returns Promise<Changes>
+     * @since 2.9.0 refactor
+     */
+    importFromJson(jsonstring: string): Promise<capSQLiteChanges>;
+    /**
+     * Check the validity of a JSON Object
+     * @param jsonstring string
+     * @returns Promise<Result>
+     * @since 2.9.0 refactor
+     */
+    isJsonValid(jsonstring: string): Promise<Result>;
+
+    /**
      * Request Permissions
      * @returns Promise<Result>
      * @since 1.0.0 refactor
@@ -101,6 +116,8 @@ export interface Result {
     result?: boolean;
     message?: string
 }
+
+
 /**
  * useSQLite Hook
  */
@@ -158,11 +175,16 @@ export const useSQLite = (): SQLiteHook  => {
 
     const echo = useCallback(async (value: string): Promise<any> => {
         if(value) {
-            return {value: value};
+            const r = await mSQLite.echo(value);
+            if(r) {
+                return r;
+            } else {
+                return {value: null};
+            }
         } else {
             return {value: null};
         }
-    }, []);
+    }, [mSQLite]);
 
     const getPlatform = useCallback(async (): Promise<any> => {
             return {platform: platform};
@@ -233,7 +255,7 @@ export const useSQLite = (): SQLiteHook  => {
     const retrieveAllConnections = useCallback(async () => {
             const r = await mSQLite.retrieveAllConnections();
             if(r) {
-            return r;
+                return r;
             } 
             return null;  
     }, [mSQLite]);
@@ -249,6 +271,34 @@ export const useSQLite = (): SQLiteHook  => {
                 }
             } 
             return {result: false, message: "Error in closeConnection"};  
+    }, [mSQLite]);
+    /**
+     * Import from Json 
+     * @param jsonstring string
+     */
+    const importFromJson = useCallback(async (jsonstring: string) => {
+        const r = await mSQLite.importFromJson(jsonstring);
+        if(r) {
+            if( typeof r.changes != 'undefined') {
+                return r;
+            }
+        } 
+        return {changes: {changes: -1, lastId: -1}, message: "Error in importFromJson"};  
+
+    }, [mSQLite]);
+    /**
+     * IIs Json Valid
+     * @param jsonstring string
+     */
+    const isJsonValid = useCallback(async (jsonstring: string) => {
+        const r = await mSQLite.isJsonValid(jsonstring);
+        if(r) {
+            if( typeof r.result != 'undefined') {
+                return r;
+            }
+        } 
+        return {result: false, message: "Error in isJsonValid"};  
+
     }, [mSQLite]);
     /**
      * Add the upgrade Statement for database version upgrading
@@ -298,13 +348,16 @@ export const useSQLite = (): SQLiteHook  => {
             retrieveAllConnections: featureNotAvailableError,
             closeAllConnections: featureNotAvailableError,
             addUpgradeStatement: featureNotAvailableError,
+            importFromJson: featureNotAvailableError,
+            isJsonValid: featureNotAvailableError,
             requestPermissions: featureNotAvailableError,
             ...notAvailable
         };
     } else {
         return {echo, getPlatform, createConnection, closeConnection,
             retrieveConnection, retrieveAllConnections, closeAllConnections,
-            addUpgradeStatement, requestPermissions, isAvailable: true};
+            addUpgradeStatement, importFromJson, isJsonValid,
+            requestPermissions, isAvailable: true};
     }
 
 }
