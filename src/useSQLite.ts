@@ -81,14 +81,14 @@ interface SQLiteHook extends  AvailableResult {
      * Import a database From a JSON
      * @param jsonstring string
      * @returns Promise<Changes>
-     * @since 2.9.0 refactor
+     * @since 1.0.0 refactor
      */
     importFromJson(jsonstring: string): Promise<capSQLiteChanges>;
     /**
      * Check the validity of a JSON Object
      * @param jsonstring string
      * @returns Promise<Result>
-     * @since 2.9.0 refactor
+     * @since 1.0.0 refactor
      */
     isJsonValid(jsonstring: string): Promise<Result>;
 

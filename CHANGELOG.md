@@ -1,3 +1,10 @@
+## 1.0.0-beta.2 (2021-01-01) REFACTOR
+
+### Bug Fixes
+
+- Fix readme
+- Fix test
+
 ## 1.0.0-beta.1 (2020-12-28) REFACTOR
 
 ## Chore
