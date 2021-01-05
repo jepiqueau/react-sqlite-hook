@@ -1,3 +1,14 @@
+## 1.0.0-beta.3 (2021-01-05) REFACTOR
+
+## Chore
+
+- @capacitor-community/sqlite@2.9.0-beta.3
+
+### Bug Fixes
+
+- Fix readme & changelog
+- fix APIHook.md
+
 ## 1.0.0-beta.2 (2021-01-01) REFACTOR
 
 ### Bug Fixes

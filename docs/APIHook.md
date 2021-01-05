@@ -20,6 +20,7 @@
 * [`importFromJson(...)`](#importfromjson)
 * [`isJsonValid(...)`](#isjsonvalid)
 * [`requestPermissions()`](#requestpermissions)
+* [`copyFromAssets()`](#copyfromassets)
 * [Interfaces](#interfaces)
 
 </docgen-index>
@@ -189,7 +190,7 @@ Import a database From a JSON
 
 **Returns:** <code>Promise&lt;<a href="#capsqlitechanges">capSQLiteChanges</a>&gt;</code>
 
-**Since:** 2.9.0 refactor
+**Since:** 1.0.0 refactor
 
 --------------------
 
@@ -208,7 +209,7 @@ Check the validity of a JSON Object
 
 **Returns:** <code>Promise&lt;<a href="#result">Result</a>&gt;</code>
 
-**Since:** 2.9.0 refactor
+**Since:** 1.0.0 refactor
 
 --------------------
 
@@ -220,6 +221,21 @@ requestPermissions() => Promise<Result>
 ```
 
 Request Permissions
+
+**Returns:** <code>Promise&lt;<a href="#result">Result</a>&gt;</code>
+
+**Since:** 1.0.0 refactor
+
+--------------------
+
+
+### copyFromAssets()
+
+```typescript
+copyFromAssets() => Promise<Result>
+```
+
+Copy databases from assets to application database folder
 
 **Returns:** <code>Promise&lt;<a href="#result">Result</a>&gt;</code>
 

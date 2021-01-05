@@ -2,7 +2,8 @@
 
 <h3 align="center">React Hook for <code>@capacitor-community/sqlite</code> plugin</h3>
 <p align="center"><strong><code>react-sqlite-hook</code></strong></p><br>
-<p align="center" style="font-size:50px;color:red"><strong>REFACTOR</strong></p><br>
+<br>
+<p align="center" style="font-size:50px;color:red"><strong>REFACTOR 🚀</strong></p><br>
 <p align="center">
   A React Hook to help Capacitor developpers to use <strong><code>@capacitor-community/sqlite</code></strong> plugin in React or Ionic/React applications
 </p>
