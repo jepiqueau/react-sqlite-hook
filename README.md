@@ -8,7 +8,7 @@
 
 <br>
 <p align="center">
-    <img src="https://img.shields.io/maintenance/yes/2020?style=flat-square" />
+    <img src="https://img.shields.io/maintenance/yes/2021?style=flat-square" />
     <a href="https://www.npmjs.com/package/react-sqlite-hook"><img src="https://img.shields.io/npm/l/react-sqlite-hook?style=flat-square" /></a>
 <br>
   <a href="https://www.npmjs.com/package/react-sqlite-hook"><img src="https://img.shields.io/npm/dw/react-sqlite-hook?style=flat-square" /></a>
@@ -17,6 +17,12 @@
 <a href="#contributors-"><img src="https://img.shields.io/badge/all%20contributors-1-orange?style=flat-square" /></a>
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 </p>
+<br>
+
+## REFACTOR 🚀
+
+A refactor of react-sqlite-hook is now available `react-sqlite-hook@refactor` to interface the `@capacitor-community/sqlite@refactor`
+
 
 ## Maintainers
 
@@ -61,7 +67,7 @@ const Tab2: React.FC = () => {
     setStart(prev => prev + 1); 
   }
   const {openDB, createSyncTable, close, execute, executeSet, run, query,
-    isDBExists, deleteDB, isJsonValid, importFromJson, exportToJson, setSyncDate, requestPermissions} = useSQLite();
+    isDBExists, deleteDB, isJsonValid, importFromJson, exportToJson, setSyncDate} = useSQLite();
   useEffect( () => {
     async function testDatabaseNoEncryption(): Promise<Boolean>  {
       setLog((log) => log.concat("*** Starting testDatabaseNoEncryption ***\n"));
@@ -152,37 +158,21 @@ const Tab2: React.FC = () => {
       setLog((log) => log.concat("*** Ending testDatabaseNoEncryption ***\n"));
       return true;
     }
-    async function permissionsGranted(): Promise<boolean> {
-      const canGo: boolean = true;
-      if(platform === "android") {
-        const res = await requestPermissions();
-        if(!res.result) {
-          console.log(" Permissions not granted");
-        }
-      }
-      return canGo;
-    }
 
     if(start > 0) {
-      permissionsGranted().then(res=> {
-        if(res) {
 
-          testDatabaseNoEncryption().then(res => {
-            if(res) {
-              setLog((log) => log.concat("*** The set of tests was successful ***\n"));
-            } else {
-              setLog((log) => log.concat("*** The set of tests failed ***\n"));
-            }
-          });
+      testDatabaseNoEncryption().then(res => {
+        if(res) {
+          setLog((log) => log.concat("*** The set of tests was successful ***\n"));
         } else {
-          setLog((log) => log.concat("\n* The set of tests failed *\n"));
+          setLog((log) => log.concat("*** The set of tests failed ***\n"));
         }
       });
 
     }
   }, [openDB, createSyncTable, close, execute, executeSet, run, query,
     isDBExists, deleteDB, isJsonValid, importFromJson, exportToJson,
-    setSyncDate, requestPermissions, start, platform]);   
+    setSyncDate, start, platform]);   
 
   return (
     <IonPage>

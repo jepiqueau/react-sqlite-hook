@@ -51,8 +51,6 @@ interface SQLiteResult extends AvailableResult {
                 => Promise<{result?: boolean, message?: string}>;
     addUpgradeStatement: (dbName: string, upgrade: VersionUpgrade)
                 => Promise<{result?: boolean, message?: string}>;
-    requestPermissions: () 
-                => Promise<{result?: boolean, message?: string}>;
 }
 export const availableFeatures = {
     useSQLite: isFeatureAvailable('CapacitorSQLite', 'useSQLite')
@@ -64,20 +62,9 @@ export function useSQLite(): SQLiteResult {
     const { CapacitorSQLite } = Plugins;
     const platform = Capacitor.getPlatform();
     const mSQLite: any = CapacitorSQLite;
-    let permissionsListener: any = null;
 
     const availableFeaturesN = {
         useSQLite: isFeatureAvailable('CapacitorSQLite', 'useSQLite')
-    }
-    const androidPermissions = async () => {
-        try {
-            await mSQLite.requestPermissions();
-            return { result: true };
-        } catch (e) {
-            console.log("Error requesting permissions " + e);
-            return { result: false,
-                message: "Error requesting permissions " + e};
-        }   
     }
   
     if (!availableFeaturesN.useSQLite) {
@@ -96,35 +83,9 @@ export function useSQLite(): SQLiteResult {
             exportToJson: featureNotAvailableError,
             setSyncDate: featureNotAvailableError,
             addUpgradeStatement: featureNotAvailableError,
-            requestPermissions: featureNotAvailableError,
             ...notAvailable
         };
     }
-    /**
-     * 
-     */
-    const requestPermissions = useCallback(async ():Promise<any> => {
-        return new Promise(async (resolve) => {
-            if(platform === "android") { 
-
-                permissionsListener = mSQLite.addListener(
-                        'androidPermissionsRequest',async (e: any) => {
-                    if(e.permissionGranted === 0) {
-                        permissionsListener.remove();
-                        resolve({result: false, message:
-                            "Error Permissions not granted"});
-                    } else {
-                        permissionsListener.remove();
-                        resolve({result: true});
-                    }
-                });
-                await androidPermissions();
-            } else {
-                resolve({result: false, message:
-                    "Error Permissions not required for this platform"});
-            }
-        });
-    }, []);
     /**
      * Open a Database
      * @param dbName string
@@ -405,5 +366,5 @@ export function useSQLite(): SQLiteResult {
     return { openDB, createSyncTable, close, execute, executeSet, run,
         query, isDBExists, deleteDB, isJsonValid, importFromJson,
         exportToJson, setSyncDate, addUpgradeStatement,
-        requestPermissions, isAvailable: true };
+        isAvailable: true };
 }
