@@ -19,7 +19,6 @@
 * [`closeAllConnections()`](#closeallconnections)
 * [`importFromJson(...)`](#importfromjson)
 * [`isJsonValid(...)`](#isjsonvalid)
-* [`requestPermissions()`](#requestpermissions)
 * [`copyFromAssets()`](#copyfromassets)
 * [Interfaces](#interfaces)
 
@@ -206,21 +205,6 @@ Check the validity of a JSON Object
 | Param            | Type                | Description |
 | ---------------- | ------------------- | ----------- |
 | **`jsonstring`** | <code>string</code> | string      |
-
-**Returns:** <code>Promise&lt;<a href="#result">Result</a>&gt;</code>
-
-**Since:** 1.0.0 refactor
-
---------------------
-
-
-### requestPermissions()
-
-```typescript
-requestPermissions() => Promise<Result>
-```
-
-Request Permissions
 
 **Returns:** <code>Promise&lt;<a href="#result">Result</a>&gt;</code>
 

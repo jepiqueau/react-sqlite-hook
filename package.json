@@ -44,12 +44,12 @@
   },
   "peerDependencies": {
     "react": "^17.0.1",
-    "@capacitor/core": "^2.4.5",
-    "@capacitor-community/sqlite": "refactor"
+    "@capacitor/core": "^2.4.6",
+    "@capacitor-community/sqlite": "^2.9.0"
   },
   "devDependencies": {
-    "@capacitor-community/sqlite": "^2.9.0-beta.3",
-    "@capacitor/core": "^2.4.5",
+    "@capacitor-community/sqlite": "^2.9.0",
+    "@capacitor/core": "^2.4.6",
     "@capacitor/docgen": "0.0.10",
     "@testing-library/react-hooks": "^3.4.2",
     "@types/jest": "^24.0.23",
@@ -57,7 +57,7 @@
     "conventional-changelog": "^3.1.4",
     "jest": "^26.5.2",
     "jest-environment-jsdom-fourteen": "^0.1.0",
-    "np": "^7.0.0",
+    "np": "^7.2.0",
     "react": "^17.0.1",
     "react-app-polyfill": "^2.0.0",
     "react-test-renderer": "^17.0.1",

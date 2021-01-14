@@ -93,13 +93,6 @@ interface SQLiteHook extends  AvailableResult {
     isJsonValid(jsonstring: string): Promise<Result>;
 
     /**
-     * Request Permissions
-     * @returns Promise<Result>
-     * @since 1.0.0 refactor
-     */
-    requestPermissions(): Promise<Result>;
-
-    /**
      * Copy databases from assets to application database folder
      * @returns Promise<Result>
      * @since 1.0.0 refactor
@@ -143,43 +136,6 @@ export const useSQLite = (): SQLiteHook  => {
         useSQLite: isFeatureAvailable('CapacitorSQLite', 'useSQLite')
     }
 
-    /**
-     * Request Permissions
-     */
-    const requestPermissions = useCallback(async ():Promise<any> => {
-        return new Promise(async (resolve) => {
-            console.log("$$$$ platform " + platform)
-            if(platform === "android") { 
-                const androidPermissions = async () => {
-                    console.log("$$$$ going to ask for permissions " + platform)
-                    try {
-                        await sqlitePlugin.requestPermissions();
-                        return { result: true };
-                    } catch (e) {
-                        console.log("Error requesting permissions " + e);
-                        return { result: false,
-                            message: "Error requesting permissions " + e};
-                    }   
-                }
-                let permissionsListener: any = null;
-                permissionsListener = sqlitePlugin.addListener(
-                        'androidPermissionsRequest',async (e: any) => {
-                    if(e.permissionGranted === 0) {
-                        permissionsListener.remove();
-                        resolve({result: false, message:
-                            "Error Permissions not granted"});
-                    } else {
-                        permissionsListener.remove();
-                        resolve({result: true});
-                    }
-                });
-                await androidPermissions();
-            } else {
-                resolve({result: false, message:
-                    "Error Permissions not required for this platform"});
-            }
-        });
-    }, [platform, sqlitePlugin]);
 
     const echo = useCallback(async (value: string): Promise<any> => {
         if(value) {
@@ -370,7 +326,6 @@ export const useSQLite = (): SQLiteHook  => {
             addUpgradeStatement: featureNotAvailableError,
             importFromJson: featureNotAvailableError,
             isJsonValid: featureNotAvailableError,
-            requestPermissions: featureNotAvailableError,
             copyFromAssets: featureNotAvailableError,
             ...notAvailable
         };
@@ -378,7 +333,7 @@ export const useSQLite = (): SQLiteHook  => {
         return {echo, getPlatform, createConnection, closeConnection,
             retrieveConnection, retrieveAllConnections, closeAllConnections,
             addUpgradeStatement, importFromJson, isJsonValid, copyFromAssets,
-            requestPermissions, isAvailable: true};
+            isAvailable: true};
     }
 
 }

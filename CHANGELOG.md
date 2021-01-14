@@ -1,3 +1,16 @@
+## 1.0.0-beta.4 (2021-01-14) REFACTOR
+
+## Chore
+
+- @capacitor/core@2.4.6
+- @capacitor-community/sqlite@2.9.0
+
+### Bug Fixes
+
+- Fix issue#60 remove Android permissions
+- Fix readme & changelog
+- fix APIHook.md
+
 ## 1.0.0-beta.3 (2021-01-05) REFACTOR
 
 ## Chore
@@ -67,6 +80,12 @@
  - retrieveAllConnections
  - addUpgradeStatement
  - requestPermissions
+
+## 0.0.8 (2021-01-13)
+
+### Bug Fixes
+
+- Fix readme
 
 
 ## 0.0.7 (2020-11-14)

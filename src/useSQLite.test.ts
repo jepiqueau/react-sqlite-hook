@@ -7,7 +7,6 @@ jest.mock('@capacitor/core', () => {
     let curTable: string = "";
     var mIsPluginAvailable: boolean = true;
     var platform: string = 'ios';
-    var listeners: string[] = [];
     return {
         Plugins: {
           CapacitorSQLite: {
@@ -26,15 +25,7 @@ jest.mock('@capacitor/core', () => {
               },
               /* TODO other methods */
   
-              
-              addListener: (eventName: string) => {
-                  listeners.push(eventName);
-                  return {permissionGranted: 1};
-              },
-              removeAllListeners: () => {
-                  listeners = [];
-              }
-      
+                    
           }
         },
         Capacitor: {
@@ -139,7 +130,7 @@ jest.mock('@capacitor-community/sqlite', () => {
 
 import { Plugins, Capacitor } from '@capacitor/core';
 import { renderHook, act } from '@testing-library/react-hooks'
-import { useSQLite/*, SQLiteProps*/ } from './useSQLite';
+import { useSQLite } from './useSQLite';
 import { SQLiteDBConnection } from '@capacitor-community/sqlite';
 import '@capacitor-community/sqlite';
 const { CapacitorSQLite } = Plugins;
@@ -164,11 +155,7 @@ it('Check CapacitorSQLite available for android platform', async () => {
         capacitorMock.init(true,'android');
     });
     
-/*    const permissionsRequest: SQLiteProps = {onPermissionsRequest: (permissionGranted: number) => {
-        console.log(`Permission Granted : ${permissionGranted}` );
-    }}
-*/
-    const r = renderHook(() => useSQLite(/*permissionsRequest*/));
+    const r = renderHook(() => useSQLite());
   
     await act(async () => {
       const result = r.result.current;
