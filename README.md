@@ -1,28 +1,36 @@
 <p align="center"><br><img src="https://avatars3.githubusercontent.com/u/16580653?v=4" width="128" height="128" /></p>
 
 <h3 align="center">React Hook for <code>@capacitor-community/sqlite</code> plugin</h3>
-<p align="center"><strong><code>react-sqlite-hook</code></strong></p>
+<p align="center"><strong><code>react-sqlite-hook@initial</code></strong></p>
 <p align="center">
-  A React Hook to help Capacitor developpers to use <strong><code>@capacitor-community/sqlite</code></strong> plugin in React or Ionic/React applications
+  A React Hook to help Capacitor developpers to use <strong><code>@capacitor-community/sqlite@initial</code></strong> plugin in React or Ionic/React applications
 </p>
 
 <br>
 <p align="center">
-    <img src="https://img.shields.io/maintenance/yes/2021?style=flat-square" />
+    <img src="https://img.shields.io/maintenance/no/2021?style=flat-square" />
     <a href="https://www.npmjs.com/package/react-sqlite-hook"><img src="https://img.shields.io/npm/l/react-sqlite-hook?style=flat-square" /></a>
 <br>
   <a href="https://www.npmjs.com/package/react-sqlite-hook"><img src="https://img.shields.io/npm/dw/react-sqlite-hook?style=flat-square" /></a>
-  <a href="https://www.npmjs.com/package/react-sqlite-hook"><img src="https://img.shields.io/npm/v/react-sqlite-hook?style=flat-square" /></a>
+  <a href="https://www.npmjs.com/package/react-sqlite-hook"><img src="https://img.shields.io/npm/v/react-sqlite-hook/initial?style=flat-square" /></a>
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 <a href="#contributors-"><img src="https://img.shields.io/badge/all%20contributors-1-orange?style=flat-square" /></a>
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 </p>
 <br>
 
-## REFACTOR 🚀
+## @NEXT For Capacitor 3 🚧 (Master)
 
-A refactor of react-sqlite-hook is now available `react-sqlite-hook@refactor` to interface the `@capacitor-community/sqlite@refactor`
+The `Capacitor3`react-sqlite-hook interfacing the `@capacitor-community/sqlite@next`
 
+## @LATEST REFACTOR 🚀 (Move to branch 2.9.x)
+
+The `refactor` react-sqlite-hook interfacing the `@capacitor-community/sqlite@latest`
+
+## @INITIAL 🛑 (Move to branch 2.4.x)
+
+The `initial` react-sqlite-hook interfacing the `@capacitor-community/sqlite@initial`. !!! The MAINTAINANCE is now STOPPED !!!
+<br>
 
 ## Maintainers
 
@@ -34,13 +42,13 @@ A refactor of react-sqlite-hook is now available `react-sqlite-hook@refactor` to
 ## Installation
 
 ```bash
-npm install --save @capacitor-community/sqlite@latest
-npm install --save-dev react-sqlite-hook
+npm install --save @capacitor-community/sqlite@initial
+npm install --save-dev react-sqlite-hook@initial
 ```
 
 ## Applications demonstrating the use of the plugin and the react hook
 
- - [react-sqlite-app-starter] (https://github.com/jepiqueau/react-sqlite-app-starter)
+ - [react-sqlite-app-starter] (https://github.com/jepiqueau/react-sqlite-app-starter/tree/2.4.x)
 
 
 ## Usage

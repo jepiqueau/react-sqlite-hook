@@ -1,3 +1,13 @@
+## 0.0.9 (2021-01-25)
+
+### Chores
+
+- Has been moved to tag 'INITIAL' not maintained anymore
+
+### Bug Fixes
+
+- Update README
+
 ## 0.0.8 (2021-01-13)
 
 ### Bug Fixes
