@@ -1,6 +1,6 @@
 {
   "name": "react-sqlite-hook",
-  "version": "0.0.8",
+  "version": "1.0.0-beta.4",
   "description": "React Hook for @Capacitor-community/sqlite plugin",
   "repository": {
     "type": "git",
@@ -24,6 +24,7 @@
     "transpile": "tsc --module ES2015 --target es2017 --outDir dist",
     "clean": "rimraf dist",
     "build-old": "node scripts/build.js",
+    "docgen": "docgen --api SQLiteHook --output-readme docs/APIHook.md",
     "test": "jest"
   },
   "eslintConfig": {
@@ -42,30 +43,31 @@
     ]
   },
   "peerDependencies": {
-    "react": "^16.13.1",
-    "@capacitor/core": "^2.4.2",
-    "@capacitor-community/sqlite": "^2.4.2-9"
+    "react": "^17.0.1",
+    "@capacitor/core": "^2.4.6",
+    "@capacitor-community/sqlite": "latest"
   },
   "devDependencies": {
-    "@capacitor-community/sqlite": "^2.4.2-9",
-    "@capacitor/core": "^2.4.2",
+    "@capacitor-community/sqlite": "latest",
+    "@capacitor/core": "^2.4.6",
+    "@capacitor/docgen": "0.0.14",
     "@testing-library/react-hooks": "^3.4.2",
     "@types/jest": "^24.0.23",
-    "@types/react-test-renderer": "^16.9.3",
+    "@types/react-test-renderer": "^17.0.0",
     "conventional-changelog": "^3.1.4",
     "jest": "^26.5.2",
     "jest-environment-jsdom-fourteen": "^0.1.0",
-    "np": "^6.5.0",
-    "react": "^16.13.1",
-    "react-app-polyfill": "^1.0.6",
-    "react-test-renderer": "^16.13.1",
+    "np": "^7.2.0",
+    "react": "^17.0.1",
+    "react-app-polyfill": "^2.0.0",
+    "react-test-renderer": "^17.0.1",
     "replace": "^1.1.0",
-    "rimraf": "^2.6.1",
+    "rimraf": "^3.0.2",
     "ts-jest": "^26.2.0",
     "tslint": "^6.1.2",
     "tslint-ionic-rules": "0.0.21",
     "typedoc": "^0.18.0",
-    "typescript": "^3.9.6",
+    "typescript": "^4.0.5",
     "uglify-js": "^3.2.0"
   },
   "jest": {

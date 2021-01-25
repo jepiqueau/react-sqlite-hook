@@ -1,9 +1,11 @@
 <p align="center"><br><img src="https://avatars3.githubusercontent.com/u/16580653?v=4" width="128" height="128" /></p>
 
 <h3 align="center">React Hook for <code>@capacitor-community/sqlite</code> plugin</h3>
-<p align="center"><strong><code>react-sqlite-hook</code></strong></p>
+<p align="center"><strong><code>react-sqlite-hook@latest</code></strong></p><br>
+<br>
+<p align="center" style="font-size:50px;color:red"><strong>REFACTOR 🚀</strong></p><br>
 <p align="center">
-  A React Hook to help Capacitor developpers to use <strong><code>@capacitor-community/sqlite</code></strong> plugin in React or Ionic/React applications
+  A React Hook to help Capacitor developpers to use <strong><code>@capacitor-community/sqlite@latest</code></strong> plugin in React or Ionic/React applications
 </p>
 
 <br>
@@ -12,17 +14,25 @@
     <a href="https://www.npmjs.com/package/react-sqlite-hook"><img src="https://img.shields.io/npm/l/react-sqlite-hook?style=flat-square" /></a>
 <br>
   <a href="https://www.npmjs.com/package/react-sqlite-hook"><img src="https://img.shields.io/npm/dw/react-sqlite-hook?style=flat-square" /></a>
-  <a href="https://www.npmjs.com/package/react-sqlite-hook"><img src="https://img.shields.io/npm/v/react-sqlite-hook?style=flat-square" /></a>
+  <a href="https://www.npmjs.com/package/react-sqlite-hook"><img src="https://img.shields.io/npm/v/react-sqlite-hook/latest?style=flat-square" /></a>
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 <a href="#contributors-"><img src="https://img.shields.io/badge/all%20contributors-1-orange?style=flat-square" /></a>
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 </p>
 <br>
 
-## REFACTOR 🚀
+## @NEXT For Capacitor 3 🚧 (Master)
 
-A refactor of react-sqlite-hook is now available `react-sqlite-hook@refactor` to interface the `@capacitor-community/sqlite@refactor`
+The `Capacitor3`react-sqlite-hook interfacing the `@capacitor-community/sqlite@next`
 
+## @LATEST REFACTOR 🚀 (Move to branch 2.9.x)
+
+The `refactor` react-sqlite-hook interfacing the `@capacitor-community/sqlite@latest`
+
+## @INITIAL 🛑 (Move to branch 2.4.x)
+
+The `initial` react-sqlite-hook interfacing the `@capacitor-community/sqlite@initial`. !!! The MAINTAINANCE is now STOPPED !!!
+<br>
 
 ## Maintainers
 
@@ -35,220 +45,23 @@ A refactor of react-sqlite-hook is now available `react-sqlite-hook@refactor` to
 
 ```bash
 npm install --save @capacitor-community/sqlite@latest
-npm install --save-dev react-sqlite-hook
+npm install --save-dev react-sqlite-hook@latest
 ```
+## Documentation
+
+- [API Hook](https://github.com/jepiqueau/react-sqlite-hook/tree/2.9.x/docs/APIHook.md)
 
 ## Applications demonstrating the use of the plugin and the react hook
 
- - [react-sqlite-app-starter] (https://github.com/jepiqueau/react-sqlite-app-starter)
+ - [react-sqlite-app-starter] (https://github.com/jepiqueau/react-sqlite-app-starter/tree/refactor)
 
 
-## Usage
-Import the hook from its own path:
+## Usage 
 
-```js
- import { useSQLite } from 'react-sqlite-hook'
-```
+The usage of `react-sqlite-hook`is demonstrated in
 
-Then use the hook from that namespace in your app:
+- [Ionic/React_Usage_Documentation](https://github.com/capacitor-community/sqlite/blob/2.9.x/docs/Ionic-React-Usage.md)
 
-```js
-import React, { useState, useEffect} from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonList, IonItem, IonLabel } from '@ionic/react';
-import './Tab2.css';
-import { useSQLite } from 'react-sqlite-hook/dist';
-import { createTablesNoEncryption, importTwoUsers, importThreeMessages,
-  dropTablesTablesNoEncryption } from '../Utils/utils-db-no-encryption';
-
-const Tab2: React.FC = () => {
-  const [log, setLog] = useState<string[]>([]);
-  const [start, setStart] = useState(0);
-  const startTest = () => {
-    setStart(prev => prev + 1); 
-  }
-  const {openDB, createSyncTable, close, execute, executeSet, run, query,
-    isDBExists, deleteDB, isJsonValid, importFromJson, exportToJson, setSyncDate} = useSQLite();
-  useEffect( () => {
-    async function testDatabaseNoEncryption(): Promise<Boolean>  {
-      setLog((log) => log.concat("*** Starting testDatabaseNoEncryption ***\n"));
-      let result: any = await openDB("test-sqlite"); 
-      if(result.result) {
-        setLog((log) => log.concat("Database 'test-sqlite' Opened\n"));
-        // Drop tables if exists
-        result = await execute(dropTablesTablesNoEncryption);
-        console.log("execute1 ",result)
-        if(result.changes.changes !== 0 && result.changes.changes !== 1) {
-          setLog((log) => log.concat("Execute2 failed\n"));
-          return false;
-        }
-        // Create tables
-        result = await execute(createTablesNoEncryption);
-        console.log("execute2 ",result)
-        if(result.changes.changes !== 0 && result.changes.changes !== 1) {
-          setLog((log) => log.concat("Execute2 failed\n"));
-          return false;
-        }
-        // Insert two users with execute method
-        result = await execute(importTwoUsers);
-        console.log("execute3 ",result)
-        if(result.changes.changes !== 2) {
-          setLog((log) => log.concat("Execute3 failed\n"));
-          return false;
-        }
-        // Select all Users
-        result = await query("SELECT * FROM users");
-        console.log('result.values.length ',result.values.length)
-        console.log('result.values[0].name ',result.values[0].name)
-        console.log('result.values[1].name ',result.values[1].name)
-        if(result.values.length !== 2 ||
-        result.values[0].name !== "Whiteley" || result.values[1].name !== "Jones") {
-          setLog((log) => log.concat("Select1 failed\n"));
-          return false;
-        }
-        // add one user with statement and values              
-        let sqlcmd = "INSERT INTO users (name,email,age) VALUES (?,?,?)";
-        let values: Array<any>  = ["Simpson","Simpson@example.com",69];
-        result = await run(sqlcmd,values);
-        if(result.changes.changes !== 1 ||result.changes.lastId !== 3) {
-          setLog((log) => log.concat("Run1 failed\n"));
-          return false;
-        }
-        // add one user with statement              
-        sqlcmd = `INSERT INTO users (name,email,age) VALUES ("Brown","Brown@example.com",15)`;
-        result = await run(sqlcmd);
-        if(result.changes.changes !== 1 || result.changes.lastId !== 4) {
-          setLog((log) => log.concat("Run2 failed\n"));
-          return false;
-        }
-        // Select all Users
-        result = await query("SELECT * FROM users");
-        if(result.values.length !== 4) {
-          setLog((log) => log.concat("Select2 failed\n"));
-          return false;
-        }
-        // Select Users with age > 35
-        sqlcmd = "SELECT name,email,age FROM users WHERE age > ?";
-        values = ["35"];
-        result = await query(sqlcmd,values);
-        if(result.values.length !== 2) {
-          setLog((log) => log.concat("Select with filter on age failed\n"));
-          return false;
-        }
-        // Import three messages
-        result = await execute(importThreeMessages);
-        if(result.changes.changes !== 3) {
-          setLog((log) => log.concat("Insert messages failed\n"));
-          return false;
-        }
-        // Select all Messages
-        result = await query("SELECT * FROM messages");
-        if(result.values.length !== 3 ||
-            result.values[0].title !== "test post 1" || result.values[1].title !== "test post 2" 
-            || result.values[2].title !== "test post 3") {
-          setLog((log) => log.concat("Select messages failed\n"));
-          return false;    
-        }
-        // Close the Database
-        result = await close("test-sqlite")
-        if(!result.result) {
-          setLog((log) => log.concat("Failed to close the database\n"));
-          return false;    
-        }       
-      }
-      setLog((log) => log.concat("*** Ending testDatabaseNoEncryption ***\n"));
-      return true;
-    }
-
-    if(start > 0) {
-
-      testDatabaseNoEncryption().then(res => {
-        if(res) {
-          setLog((log) => log.concat("*** The set of tests was successful ***\n"));
-        } else {
-          setLog((log) => log.concat("*** The set of tests failed ***\n"));
-        }
-      });
-
-    }
-  }, [openDB, createSyncTable, close, execute, executeSet, run, query,
-    isDBExists, deleteDB, isJsonValid, importFromJson, exportToJson,
-    setSyncDate, start, platform]);   
-
-  return (
-    <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Tab Two</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Tab 2</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <IonList>
-          <IonItem>
-            <IonButton onClick={startTest} expand="block">SQLite Test</IonButton>
-          </IonItem>
-        </IonList>
-        <pre>
-          <p>{log}</p>
-        </pre>
-      </IonContent>
-    </IonPage>
-  );
-};
-
-export default Tab2;
-
-```
-
-with `../Utils/utils-db-no-encryption`
-
-```js
-export const createTablesNoEncryption: string =  `
-    BEGIN TRANSACTION;
-    CREATE TABLE IF NOT EXISTS users (
-    id INTEGER PRIMARY KEY NOT NULL,
-    email TEXT UNIQUE NOT NULL,
-    name TEXT,
-    company TEXT,
-    size FLOAT,
-    age INTEGER
-    );
-    CREATE TABLE IF NOT EXISTS messages (
-    id INTEGER PRIMARY KEY NOT NULL,
-    userid INTEGER,
-    title TEXT NOT NULL,
-    body TEXT NOT NULL,
-    FOREIGN KEY (userid) REFERENCES users(id) ON DELETE SET DEFAULT
-    );
-    PRAGMA user_version = 1;
-    COMMIT TRANSACTION;
-`;
-export const importTwoUsers: string = `
-    BEGIN TRANSACTION;
-    DELETE FROM users;
-    INSERT INTO users (name,email,age) VALUES ("Whiteley","Whiteley.com",30);
-    INSERT INTO users (name,email,age) VALUES ("Jones","Jones.com",44);
-    COMMIT TRANSACTION;
-`;
-export const importThreeMessages: string = `
-    BEGIN TRANSACTION;
-    DELETE FROM messages;
-    INSERT INTO messages (userid,title,body) VALUES (1,"test post 1","content test post 1");
-    INSERT INTO messages (userid,title,body) VALUES (2,"test post 2","content test post 2");
-    INSERT INTO messages (userid,title,body) VALUES (1,"test post 3","content test post 3");
-    COMMIT TRANSACTION;
-`;
-export const dropTablesTablesNoEncryption: string = `
-    PRAGMA foreign_keys = OFF;
-    DROP TABLE IF EXISTS users;
-    DROP TABLE IF EXISTS messages;
-    PRAGMA foreign_keys = ON;
-`;
-```
 
 ## Contributors ✨
 
