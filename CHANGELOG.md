@@ -1,3 +1,10 @@
+## 1.0.0 (2021-01-25) REFACTOR
+
+## Chore
+
+- Move to branch 2.9.x tag latest
+- @capacitor-community/sqlite@2.9.6
+
 ## 1.0.0-beta.4 (2021-01-14) REFACTOR
 
 ## Chore
