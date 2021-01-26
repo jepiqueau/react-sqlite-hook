@@ -42,7 +42,7 @@ The `initial` react-sqlite-hook interfacing the `@capacitor-community/sqlite@ini
 | Quéau Jean Pierre | [jepiqueau](https://github.com/jepiqueau) |        |
 
 
-## Installation  🚧 !!! Not yet there !!! 🚧
+## Installation
 
 ```bash
 npm install --save @capacitor-community/sqlite@next
@@ -56,7 +56,7 @@ npm install --save-dev react-sqlite-hook@next
 
 ## Applications demonstrating the use of the plugin and the react hook
 
- - [react-sqlite-app-starter] (https://github.com/jepiqueau/react-sqlite-app-starter)
+ - [react-sqlite-app-starter](https://github.com/jepiqueau/react-sqlite-app-starter)
 
 
 ## Usage 
