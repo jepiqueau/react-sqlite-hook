@@ -1,4 +1,4 @@
-## 2.0.0-alpha.1 (2021-01-25) REFACTOR
+## 2.0.0-alpha.1 (2021-01-26) REFACTOR
 
 ## Chore
 
