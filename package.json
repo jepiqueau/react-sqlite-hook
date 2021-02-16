@@ -43,12 +43,12 @@
     ]
   },
   "peerDependencies": {
-    "react": "^17.0.1",
+    "@capacitor-community/sqlite": "^2.9.12",
     "@capacitor/core": "^2.4.6",
-    "@capacitor-community/sqlite": "latest"
+    "react": "^17.0.1"
   },
   "devDependencies": {
-    "@capacitor-community/sqlite": "latest",
+    "@capacitor-community/sqlite": "2.9.12",
     "@capacitor/core": "^2.4.6",
     "@capacitor/docgen": "0.0.14",
     "@testing-library/react-hooks": "^3.4.2",

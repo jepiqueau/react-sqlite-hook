@@ -4,8 +4,8 @@ import { AvailableResult, notAvailable } from './util/models';
 import { isFeatureAvailable, featureNotAvailableError } 
                                     from './util/feature-check';
 import '@capacitor-community/sqlite';
-import { SQLiteDBConnection,
-         SQLiteConnection, capSQLiteChanges } from '@capacitor-community/sqlite';
+import { SQLiteDBConnection, SQLiteConnection,
+         capSQLiteChanges, capSQLiteValues } from '@capacitor-community/sqlite';
 
 export { SQLiteDBConnection }
 
@@ -78,6 +78,40 @@ export interface SQLiteHook extends AvailableResult {
      * @since 1.0.0 refactor
      */
     closeAllConnections(): Promise<Result>;
+    /**
+     * Check if database connection exists
+     * @param database
+     * @returns Promise<Result>
+     * @since 1.0.1 refactor
+     */
+    isConnection(database: string): Promise<Result>;
+    /**
+     * Check if database exists
+     * @param database
+     * @returns Promise<Result>
+     * @since 1.0.1 refactor
+     */
+    isDatabase(database: string): Promise<Result>;
+    /**
+     * Get the database list
+     * @returns Promise<capSQLiteValues>
+     * @since 1.0.1 refactor
+     */
+    getDatabaseList(): Promise<capSQLiteValues>;
+    /**
+     * Add SQLIte Suffix to existing databases
+     * @param folderPath
+     * @returns Promise<Result>
+     * @since 1.0.1 refactor
+     */
+    addSQLiteSuffix(folderPath?: string): Promise<Result>
+    /**
+     * Delete Old Cordova databases
+     * @param folderPath
+     * @returns Promise<Result>
+     * @since 1.0.1 refactor
+     */
+    deleteOldDatabases(folderPath?: string): Promise<Result>;
     /**
      * Import a database From a JSON
      * @param jsonstring string
@@ -187,7 +221,7 @@ export const useSQLite = (): SQLiteHook  => {
      * Close the Connection to the Database
      * @param dbName string
      */
-    const closeConnection = useCallback(async (dbName: string) => {
+    const closeConnection = useCallback(async (dbName: string): Promise<Result> => {
         if(dbName.length > 0) {
             const r = await mSQLite.closeConnection(dbName);
             if(r) {
@@ -199,6 +233,85 @@ export const useSQLite = (): SQLiteHook  => {
         }
         return {result: false, message: "Must provide a database name"};
     }, [mSQLite]);
+    /**
+     * Check if database connection exists
+     * @param database
+     */
+    const isConnection = useCallback(async (dbName: string): Promise<Result> => {
+        if(dbName.length > 0) {
+            const r = await mSQLite.isConnection(dbName);
+            if(r) {
+                if( typeof r.result != 'undefined') {
+                    return r;
+                }
+            } 
+            return {result: false, message: "Error in isConnection"};  
+        }
+        return {result: false, message: "Must provide a database name"};
+
+    }, [mSQLite]);
+    /**
+     * Check if database exists
+     * @param database
+     */
+    const isDatabase = useCallback(async (dbName: string): Promise<Result> => {
+        if(dbName.length > 0) {
+            const r = await mSQLite.isDatabase(dbName);
+            if(r) {
+                if( typeof r.result != 'undefined') {
+                    return r;
+                }
+            } 
+            return {result: false, message: "Error in isDatabase"};  
+        }
+        return {result: false, message: "Must provide a database name"};
+
+    }, [mSQLite]);
+    /**
+     * Get the database list
+     * @returns Promise<capSQLiteValues>
+     * @since 1.0.1 refactor
+     */
+    const getDatabaseList = useCallback(async (): Promise<capSQLiteValues> => {
+        const r = await mSQLite.getDatabaseList();
+        if(r) {
+            if( typeof r.values != 'undefined') {
+                return r;
+            }
+        } 
+        return {values: [], message: "Error in getDatabaseList"};  
+
+    }, [mSQLite]);
+    /**
+     * Add SQLIte Suffix to existing databases
+     * @param folderPath
+     */
+    const addSQLiteSuffix = useCallback(async (folderPath?: string): Promise<Result> => {
+        const path: string = folderPath ? folderPath : "default"
+        const r = await mSQLite.addSQLiteSuffix(path);
+        if(r) {
+            if( typeof r.result != 'undefined') {
+                return r;
+            }
+        } 
+        return {result: false, message: "Error in addSQLiteSuffix"};  
+
+    }, [mSQLite]);
+    /**
+     * Delete Old Cordova databases
+     * @param folderPath
+     */
+    const deleteOldDatabases = useCallback(async (folderPath?: string): Promise<Result> => {
+        const path: string = folderPath ? folderPath : "default"
+        const r = await mSQLite.deleteOldDatabases(path);
+        if(r) {
+            if( typeof r.result != 'undefined') {
+                return r;
+            }
+        } 
+        return {result: false, message: "Error in deleteOldDatabases"};  
+    }, [mSQLite]);
+
     /**
      * Retrieve a Connection to the Database
      * @param dbName string
@@ -328,12 +441,19 @@ export const useSQLite = (): SQLiteHook  => {
             importFromJson: featureNotAvailableError,
             isJsonValid: featureNotAvailableError,
             copyFromAssets: featureNotAvailableError,
+            isConnection: featureNotAvailableError,
+            isDatabase: featureNotAvailableError,
+            getDatabaseList: featureNotAvailableError,
+            addSQLiteSuffix: featureNotAvailableError,
+            deleteOldDatabases: featureNotAvailableError,
             ...notAvailable
         };
     } else {
         return {echo, getPlatform, createConnection, closeConnection,
             retrieveConnection, retrieveAllConnections, closeAllConnections,
             addUpgradeStatement, importFromJson, isJsonValid, copyFromAssets,
+            isConnection, isDatabase, getDatabaseList, addSQLiteSuffix,
+            deleteOldDatabases,
             isAvailable: true};
     }
 
