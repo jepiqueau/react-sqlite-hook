@@ -17,6 +17,11 @@
 * [`retrieveAllConnections()`](#retrieveallconnections)
 * [`closeConnection(...)`](#closeconnection)
 * [`closeAllConnections()`](#closeallconnections)
+* [`isConnection(...)`](#isconnection)
+* [`isDatabase(...)`](#isdatabase)
+* [`getDatabaseList()`](#getdatabaselist)
+* [`addSQLiteSuffix(...)`](#addsqlitesuffix)
+* [`deleteOldDatabases(...)`](#deleteolddatabases)
 * [`importFromJson(...)`](#importfromjson)
 * [`isJsonValid(...)`](#isjsonvalid)
 * [`copyFromAssets()`](#copyfromassets)
@@ -169,6 +174,93 @@ Close all database connections
 --------------------
 
 
+### isConnection(...)
+
+```typescript
+isConnection(database: string) => Promise<Result>
+```
+
+Check if database connection exists
+
+| Param          | Type                |
+| -------------- | ------------------- |
+| **`database`** | <code>string</code> |
+
+**Returns:** <code>Promise&lt;<a href="#result">Result</a>&gt;</code>
+
+**Since:** 2.0.0
+
+--------------------
+
+
+### isDatabase(...)
+
+```typescript
+isDatabase(database: string) => Promise<Result>
+```
+
+Check if database exists
+
+| Param          | Type                |
+| -------------- | ------------------- |
+| **`database`** | <code>string</code> |
+
+**Returns:** <code>Promise&lt;<a href="#result">Result</a>&gt;</code>
+
+**Since:** 2.0.0
+
+--------------------
+
+
+### getDatabaseList()
+
+```typescript
+getDatabaseList() => Promise<capSQLiteValues>
+```
+
+Get the database list
+
+**Returns:** <code>Promise&lt;<a href="#capsqlitevalues">capSQLiteValues</a>&gt;</code>
+
+**Since:** 1.0.1 refactor
+
+--------------------
+
+
+### addSQLiteSuffix(...)
+
+```typescript
+addSQLiteSuffix(folderPath?: string | undefined) => Promise<void>
+```
+
+Add SQLIte Suffix to existing databases
+
+| Param            | Type                |
+| ---------------- | ------------------- |
+| **`folderPath`** | <code>string</code> |
+
+**Since:** 2.0.0
+
+--------------------
+
+
+### deleteOldDatabases(...)
+
+```typescript
+deleteOldDatabases(folderPath?: string | undefined) => Promise<void>
+```
+
+Delete Old Cordova databases
+
+| Param            | Type                |
+| ---------------- | ------------------- |
+| **`folderPath`** | <code>string</code> |
+
+**Since:** 2.0.0
+
+--------------------
+
+
 ### importFromJson(...)
 
 ```typescript
@@ -257,6 +349,21 @@ Copy databases from assets to application database folder
 | **set**     | (key: K, value: V) =&gt; this                                                                                  |
 
 
+#### Result
+
+| Prop          | Type                 |
+| ------------- | -------------------- |
+| **`result`**  | <code>boolean</code> |
+| **`message`** | <code>string</code>  |
+
+
+#### capSQLiteValues
+
+| Prop         | Type               | Description                      |
+| ------------ | ------------------ | -------------------------------- |
+| **`values`** | <code>any[]</code> | the data values list as an Array |
+
+
 #### capSQLiteChanges
 
 | Prop          | Type                                        | Description                               |
@@ -270,13 +377,5 @@ Copy databases from assets to application database folder
 | ------------- | ------------------- | ---------------------------------------------------- |
 | **`changes`** | <code>number</code> | the number of changes from an execute or run command |
 | **`lastId`**  | <code>number</code> | the lastId created from a run command                |
-
-
-#### Result
-
-| Prop          | Type                 |
-| ------------- | -------------------- |
-| **`result`**  | <code>boolean</code> |
-| **`message`** | <code>string</code>  |
 
 </docgen-api>
