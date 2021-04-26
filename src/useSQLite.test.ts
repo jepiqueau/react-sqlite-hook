@@ -145,7 +145,7 @@ it('Check CapacitorSQLite available for ios platform', async () => {
         capacitorMock.init(true,'ios');
     });
     
-    const r = renderHook(() => useSQLite());
+    const r = renderHook(() => useSQLite({}));
 
     await act(async () => {
       const result = r.result.current;
@@ -159,7 +159,7 @@ it('Check CapacitorSQLite available for android platform', async () => {
         capacitorMock.init(true,'android');
     });
     
-    const r = renderHook(() => useSQLite());
+    const r = renderHook(() => useSQLite({}));
   
     await act(async () => {
       const result = r.result.current;
@@ -172,7 +172,7 @@ it('Check CapacitorSQLite available for electron platform', async () => {
     await act(async () => {
         capacitorMock.init(true, 'electron');
     });
-    const r = renderHook(() => useSQLite());
+    const r = renderHook(() => useSQLite({}));
   
     await act(async () => {
       const result = r.result.current;
@@ -185,7 +185,7 @@ it('Check CapacitorSQLite available for web platform', async () => {
     await act(async () => {
         capacitorMock.init(false, 'web');
     });
-    const r = renderHook(() => useSQLite());
+    const r = renderHook(() => useSQLite({}));
     await act(async () => {
     });
   
@@ -201,7 +201,7 @@ it('Check CapacitorSQLite echo for ios platform', async () => {
         capacitorMock.init(true,'ios');
     });
     
-    const r = renderHook(() => useSQLite());
+    const r = renderHook(() => useSQLite({}));
 
     await act(async () => {
         const result = r.result.current;
@@ -217,7 +217,7 @@ it('Check CapacitorSQLite createConnection for ios platform', async () => {
         capacitorMock.init(true,'ios');
     });
     
-    const r = renderHook(() => useSQLite());
+    const r = renderHook(() => useSQLite({}));
 
     await act(async () => {
         const result = r.result.current;
@@ -233,7 +233,7 @@ it('Check CapacitorSQLite retrieveConnection for ios platform', async () => {
         capacitorMock.init(true,'ios');
     });
     
-    const r = renderHook(() => useSQLite());
+    const r = renderHook(() => useSQLite({}));
 
     await act(async () => {
         const result = r.result.current;
@@ -252,7 +252,7 @@ it('Check CapacitorSQLite closeConnection for ios platform', async () => {
         capacitorMock.init(true,'ios');
     });
     
-    const r = renderHook(() => useSQLite());
+    const r = renderHook(() => useSQLite({}));
 
     await act(async () => {
         const result = r.result.current;
@@ -278,7 +278,7 @@ it('Check CapacitorSQLite create two connections for ios platform', async () => 
         capacitorMock.init(true,'ios');
     });
     
-    const r = renderHook(() => useSQLite());
+    const r = renderHook(() => useSQLite({}));
 
     await act(async () => {
         const result = r.result.current;
@@ -302,7 +302,7 @@ it('Check CapacitorSQLite close all connections for ios platform', async () => {
         capacitorMock.init(true,'ios');
     });
     
-    const r = renderHook(() => useSQLite());
+    const r = renderHook(() => useSQLite({}));
 
     await act(async () => {
         const result = r.result.current;

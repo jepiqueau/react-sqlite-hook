@@ -25,9 +25,12 @@
 * [`importFromJson(...)`](#importfromjson)
 * [`isJsonValid(...)`](#isjsonvalid)
 * [`copyFromAssets()`](#copyfromassets)
+* [`checkConnectionsConsistency()`](#checkconnectionsconsistency)
 * [Interfaces](#interfaces)
 
 </docgen-index>
+
+* [Listeners](#listeners)
 
 ## API Hook
 
@@ -312,6 +315,23 @@ Copy databases from assets to application database folder
 --------------------
 
 
+### checkConnectionsConsistency()
+
+```typescript
+checkConnectionsConsistency() => Promise<Result>
+```
+
+Check the consistency between Js Connections
+and Native Connections
+if inconsistency all connections are removed
+
+**Returns:** <code>Promise&lt;<a href="#result">Result</a>&gt;</code>
+
+**Since:** 2.0.1
+
+--------------------
+
+
 ### Interfaces
 
 
@@ -379,3 +399,15 @@ Copy databases from assets to application database folder
 | **`lastId`**  | <code>number</code> | the lastId created from a run command                |
 
 </docgen-api>
+
+### Listeners
+
+`Available since 2.0.1`
+
+The listeners are attached to the plugin.
+
+| Listener             | Type               |  Description                                               |
+| -------------------- | ------------------ | ---------------------------------------------------------- |
+| **onProgressImport** | {progress: string} | Emitted at different steps of the `importFromJson` process |
+| **onProgressExport** | {progress: string} | Emitted at different steps of the `exportToJson` process   |
+

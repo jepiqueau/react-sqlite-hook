@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useEffect } from 'react';
 import { Capacitor } from '@capacitor/core';
 import { AvailableResult, notAvailable } from './util/models';
 import { isFeatureAvailable, featureNotAvailableError } 
@@ -8,6 +8,10 @@ import { CapacitorSQLite, SQLiteDBConnection, SQLiteConnection,
 
 export { SQLiteDBConnection }
 
+export type SQLiteProps = {
+    onProgressImport?: (progress: string) => void;
+    onProgressExport?: (progress: string) => void;
+}
 /**
  * SQLite Hook Interface
  */
@@ -130,6 +134,15 @@ export interface SQLiteHook extends AvailableResult {
      * @since 2.0.0
      */
     copyFromAssets(): Promise<void>;
+    /**
+     * Check the consistency between Js Connections
+     * and Native Connections
+     * if inconsistency all connections are removed
+     * @returns Promise<Result>
+     * @since 2.0.1
+     */
+    checkConnectionsConsistency(): Promise<Result>;
+
 
 }
 
@@ -154,14 +167,35 @@ export interface Result {
 /**
  * useSQLite Hook
  */
-export const useSQLite = (): SQLiteHook  => {
-
+export const useSQLite = ({
+    onProgressImport,
+    onProgressExport
+}: SQLiteProps): SQLiteHook  => {
     const platform = Capacitor.getPlatform();
     const sqlitePlugin: any = CapacitorSQLite;
     const mSQLite = useMemo(() => {
         return new SQLiteConnection(sqlitePlugin);
     },[sqlitePlugin])
 
+    useEffect(() => {
+        // init Listeners
+        let importListener: any = null;
+        let exportListener: any = null;    
+         if(onProgressImport && sqlitePlugin) importListener =
+            sqlitePlugin.addListener('sqliteImportProgressEvent',
+            (e: any) => {
+                onProgressImport(e.progress);
+            });
+        if(onProgressExport && sqlitePlugin) exportListener =
+            sqlitePlugin.addListener('sqliteExportProgressEvent',
+            (e: any) => {
+                onProgressExport(e.progress);
+            });
+        return () => {
+            if(importListener) importListener.remove();
+            if(exportListener) exportListener.remove();
+        }
+    }, []);
 
     const availableFeaturesN = {
         useSQLite: isFeatureAvailable('CapacitorSQLite', 'useSQLite')
@@ -447,6 +481,24 @@ export const useSQLite = (): SQLiteHook  => {
             return Promise.reject(err);
         }
     }, [mSQLite]);
+    /**
+     * Check the consistency between Js Connections
+     * and Native Connections
+     * if inconsistency all connections are removed
+     */
+    const checkConnectionsConsistency = useCallback(async () : Promise<Result> => {
+        try {
+            const r = await mSQLite.checkConnectionsConsistency();
+            if(r) {
+                return Promise.resolve(r);
+            } else {
+                return Promise.reject('Error Json Object not valid');
+            } 
+        } catch (err) {
+            return Promise.reject(err);
+        }
+
+    }, [mSQLite]);
 
     if (!availableFeaturesN.useSQLite) {
         return {
@@ -466,6 +518,7 @@ export const useSQLite = (): SQLiteHook  => {
             getDatabaseList: featureNotAvailableError,
             addSQLiteSuffix: featureNotAvailableError,
             deleteOldDatabases: featureNotAvailableError,
+            checkConnectionsConsistency: featureNotAvailableError, 
             ...notAvailable
         };
     } else {
@@ -473,7 +526,7 @@ export const useSQLite = (): SQLiteHook  => {
             retrieveConnection, retrieveAllConnections, closeAllConnections,
             addUpgradeStatement, importFromJson, isJsonValid, copyFromAssets,
             isConnection, isDatabase, getDatabaseList, addSQLiteSuffix,
-            deleteOldDatabases, isAvailable: true};
+            deleteOldDatabases, checkConnectionsConsistency, isAvailable: true};
     }
 
 }

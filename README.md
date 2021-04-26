@@ -48,6 +48,36 @@ The `initial` react-sqlite-hook interfacing the `@capacitor-community/sqlite@ini
 npm install --save @capacitor-community/sqlite@next
 npm install --save-dev react-sqlite-hook@next
 ```
+## Supported methods
+
+| Name                        | Android | iOS | Electron | Web |
+| :-------------------------- | :------ | :-- | :------- | :-- |
+| echo                        | ✅      | ✅   | 🚧       | ❌  |
+| getPlatform                 | ✅      | ✅   | 🚧       | ❌  |
+| addUpgradeStatement         | ✅      | ✅   | 🚧       | ❌  |
+| createConnection            | ✅      | ✅   | 🚧       | ❌  |
+| retrieveConnection          | ✅      | ✅   | 🚧       | ❌  |
+| retrieveAllConnections      | ✅      | ✅   | 🚧       | ❌  |
+| closeConnection             | ✅      | ✅   | 🚧       | ❌  |
+| closeAllConnections         | ✅      | ✅   | 🚧       | ❌  |
+| isConnection                | ✅      | ✅   | 🚧       | ❌  |
+| isDatabase                  | ✅      | ✅   | 🚧       | ❌  |
+| getDatabaseList             | ✅      | ✅   | 🚧       | ❌  |
+| addSQLiteSuffix             | ✅      | ✅   | 🚧       | ❌  |
+| deleteOldDatabases          | ✅      | ✅   | 🚧       | ❌  |
+| importFromJson              | ✅      | ✅   | 🚧       | ❌  |
+| isJsonValid                 | ✅      | ✅   | 🚧       | ❌  |
+| copyFromAssets              | ✅      | ✅   | 🚧       | ❌  |
+| checkConnectionsConsistency | ✅      | ✅   | 🚧       | ❌  |
+
+
+## Supported listeners
+
+| Name             | Android | iOS | Electron | Web |
+| :--------------- | :------ | :-- | :------- | :-- |
+| onProgressImport | ✅      | ✅   | 🚧       | ❌  |
+| onProgressExport | ✅      | ✅   | 🚧       | ❌  |
+
 
 ## Documentation
 
