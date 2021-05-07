@@ -26,6 +26,9 @@
 * [`isJsonValid(...)`](#isjsonvalid)
 * [`copyFromAssets()`](#copyfromassets)
 * [`checkConnectionsConsistency()`](#checkconnectionsconsistency)
+* [`isSecretStored()`](#issecretstored)
+* [`setEncryptionSecret(...)`](#setencryptionsecret)
+* [`changeEncryptionSecret(...)`](#changeencryptionsecret)
 * [Interfaces](#interfaces)
 
 </docgen-index>
@@ -328,6 +331,59 @@ if inconsistency all connections are removed
 **Returns:** <code>Promise&lt;<a href="#result">Result</a>&gt;</code>
 
 **Since:** 2.0.1
+
+--------------------
+
+
+### isSecretStored()
+
+```typescript
+isSecretStored() => Promise<Result>
+```
+
+Check if secure secret has been stored
+
+**Returns:** <code>Promise&lt;<a href="#result">Result</a>&gt;</code>
+
+**Since:** 2.0.2
+
+--------------------
+
+
+### setEncryptionSecret(...)
+
+```typescript
+setEncryptionSecret(passphrase: string) => Promise<void>
+```
+
+Set an encrypted secret to secure storage
+To run only once
+Will migrate from GlobalSQLite secret when required
+
+| Param            | Type                |
+| ---------------- | ------------------- |
+| **`passphrase`** | <code>string</code> |
+
+**Since:** 2.0.2
+
+--------------------
+
+
+### changeEncryptionSecret(...)
+
+```typescript
+changeEncryptionSecret(passphrase: string, oldpassphrase: string) => Promise<void>
+```
+
+Change encrypted secret from secure storage
+Not to use to migrate from GlobalSQLite secret (run setEncryptionSecret)
+
+| Param               | Type                |
+| ------------------- | ------------------- |
+| **`passphrase`**    | <code>string</code> |
+| **`oldpassphrase`** | <code>string</code> |
+
+**Since:** 2.0.2
 
 --------------------
 

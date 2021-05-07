@@ -69,6 +69,9 @@ npm install --save-dev react-sqlite-hook@next
 | isJsonValid                 | ✅      | ✅   | 🚧       | ❌  |
 | copyFromAssets              | ✅      | ✅   | 🚧       | ❌  |
 | checkConnectionsConsistency | ✅      | ✅   | 🚧       | ❌  |
+| isSecretStored              | ✅      | ✅   | 🚧       | ❌  |
+| setEncryptionSecret         | ✅      | ✅   | 🚧       | ❌  |
+| changeEncryptionSecret      | ✅      | ✅   | 🚧       | ❌  |
 
 
 ## Supported listeners
