@@ -11,6 +11,7 @@
 
 * [`echo(...)`](#echo)
 * [`getPlatform()`](#getplatform)
+* [`getCapacitorSQLite()`](#getcapacitorsqlite)
 * [`addUpgradeStatement(...)`](#addupgradestatement)
 * [`createConnection(...)`](#createconnection)
 * [`retrieveConnection(...)`](#retrieveconnection)
@@ -72,6 +73,21 @@ Get platform
 **Returns:** <code>Promise&lt;{ platform: string; }&gt;</code>
 
 **Since:** 1.0.0 refactor
+
+--------------------
+
+
+### getCapacitorSQLite()
+
+```typescript
+getCapacitorSQLite() => Promise<{ plugin: any; }>
+```
+
+Get CapacitorSQLite plugin
+
+**Returns:** <code>Promise&lt;{ plugin: any; }&gt;</code>
+
+**Since:** 2.0.3
 
 --------------------
 

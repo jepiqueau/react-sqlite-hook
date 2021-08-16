@@ -1,3 +1,16 @@
+## 2.0.3 (2021-08-16) CAPACITOR 3 LATEST
+
+### Chore
+
+- update to @capacitor/core 3.1.2
+- update to @capacitor-community/sqlite 3.1.3-3
+
+### Added Features
+
+- add `getCapacitorSQLite` method
+- open to web
+- update README.md & APIHook.md
+
 ## 2.0.2 (2021-05-07) CAPACITOR 3 NEXT
 
 ### Chore

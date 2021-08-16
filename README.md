@@ -1,7 +1,7 @@
 <p align="center"><br><img src="https://avatars3.githubusercontent.com/u/16580653?v=4" width="128" height="128" /></p>
 
-<h3 align="center">React Hook for <code>@capacitor-community/sqlite@next</code> plugin</h3>
-<p align="center"><strong><code>react-sqlite-hook@next</code></strong></p>
+<h3 align="center">React Hook for <code>@capacitor-community/sqlite@latest</code> plugin</h3>
+<p align="center"><strong><code>react-sqlite-hook@latest</code></strong></p>
 <br>
 <p align="center"><strong><code>Capacitor 3</code></strong></p>
 <br>
@@ -22,13 +22,13 @@
 </p>
 <br>
 
-## @NEXT For Capacitor 3 🚧 (Master)
+## @LATEST For Capacitor 3 🚧 (Master)
 
-The `Capacitor3`react-sqlite-hook interfacing the `@capacitor-community/sqlite@next`
+The `Capacitor3`react-sqlite-hook interfacing the `@capacitor-community/sqlite@latest`
 
-## @LATEST REFACTOR 🚀 (Move to branch 2.9.x)
+## @REFACTOR REFACTOR 🚀 (Move to branch 2.9.x)
 
-The `refactor` react-sqlite-hook interfacing the `@capacitor-community/sqlite@latest`
+The `refactor` react-sqlite-hook interfacing the `@capacitor-community/sqlite@refactor`
 
 ## @INITIAL 🛑 (Move to branch 2.4.x)
 
@@ -54,6 +54,7 @@ npm install --save-dev react-sqlite-hook@next
 | :-------------------------- | :------ | :-- | :------- | :-- |
 | echo                        | ✅      | ✅   | 🚧       | ❌  |
 | getPlatform                 | ✅      | ✅   | 🚧       | ❌  |
+| getCapacitorSQLite          | ✅      | ✅   | 🚧       | ❌  |
 | addUpgradeStatement         | ✅      | ✅   | 🚧       | ❌  |
 | createConnection            | ✅      | ✅   | 🚧       | ❌  |
 | retrieveConnection          | ✅      | ✅   | 🚧       | ❌  |
