@@ -8,7 +8,6 @@
 ### Added Features
 
 - add `getCapacitorSQLite` method
-- open to web
 - update README.md & APIHook.md
 
 ## 2.0.2 (2021-05-07) CAPACITOR 3 NEXT
