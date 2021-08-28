@@ -211,19 +211,23 @@ export const useSQLite = ({
         // init Listeners
         let importListener: any = null;
         let exportListener: any = null;    
-         if(onProgressImport && sqlitePlugin) importListener =
-            sqlitePlugin.addListener('sqliteImportProgressEvent',
-            (e: any) => {
-                onProgressImport(e.progress);
-            });
-        if(onProgressExport && sqlitePlugin) exportListener =
-            sqlitePlugin.addListener('sqliteExportProgressEvent',
-            (e: any) => {
-                onProgressExport(e.progress);
-            });
+        if(platform != "electron") {   
+            if(onProgressImport && sqlitePlugin) importListener =
+                sqlitePlugin.addListener('sqliteImportProgressEvent',
+                (e: any) => {
+                    onProgressImport(e.progress);
+                });
+            if(onProgressExport && sqlitePlugin) exportListener =
+                sqlitePlugin.addListener('sqliteExportProgressEvent',
+                (e: any) => {
+                    onProgressExport(e.progress);
+                });
+            }
         return () => {
-            if(importListener) importListener.remove();
-            if(exportListener) exportListener.remove();
+            if(platform != "electron") {   
+                if(importListener) importListener.remove();
+                if(exportListener) exportListener.remove();
+            }
         }
     }, []);
 

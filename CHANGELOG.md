@@ -1,3 +1,10 @@
+
+## 2.0.5 (2021-08-28) CAPACITOR 3 LATEST
+
+### Bug Fixes
+
+- Fix Electron no listeners
+
 ## 2.0.4 (2021-08-28) CAPACITOR 3 LATEST
 
 ### Chore
