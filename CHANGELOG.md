@@ -1,3 +1,14 @@
+## 2.0.4 (2021-08-28) CAPACITOR 3 LATEST
+
+### Chore
+
+- update to @capacitor/core 3.2.0
+- update to @capacitor-community/sqlite 3.2.0-8
+
+### Bug Fixes
+
+- Fix copyFromAssets
+
 ## 2.0.3 (2021-08-16) CAPACITOR 3 LATEST
 
 ### Chore

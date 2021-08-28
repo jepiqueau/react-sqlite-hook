@@ -10,7 +10,7 @@ const allTrue = {
 
 const featureMap = {
   CapacitorSQLite: {
-    useSQLite: {...allTrue, web: false},    
+    useSQLite: {...allTrue/*, web: false*/},    
   }
 }
 

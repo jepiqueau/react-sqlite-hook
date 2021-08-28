@@ -508,7 +508,6 @@ export const useSQLite = ({
      * Copy databases from assets to application database folder
      */
     const copyFromAssets = useCallback(async () : Promise<void> => {
-        const r = await mSQLite.copyFromAssets();
         try {
             await mSQLite.copyFromAssets();
             return Promise.resolve();
