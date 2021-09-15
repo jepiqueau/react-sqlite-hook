@@ -15,7 +15,6 @@
   "main": "dist/esm/index.js",
   "typings": "dist/esm/index.d.ts",
   "scripts": {
-    "start": "node scripts/start.js",
     "build": "npm run clean && npm run transpile && npm run copy-package",
     "copy-package": "cp ./package.json ./dist/package.json",
     "package": "npm pack ./dist",
@@ -43,13 +42,13 @@
     ]
   },
   "peerDependencies": {
-    "@capacitor-community/sqlite": "^3.2.0-8",
-    "@capacitor/core": "^3.2.0",
+    "@capacitor-community/sqlite": "^3.2.2-2",
+    "@capacitor/core": "^3.2.2",
     "react": "^17.0.2"
   },
   "devDependencies": {
-    "@capacitor-community/sqlite": "3.2.0-8",
-    "@capacitor/core": "3.2.0",
+    "@capacitor-community/sqlite": "^3.2.2-2",
+    "@capacitor/core": "^3.2.2",
     "@capacitor/docgen": "0.0.17",
     "@testing-library/react-hooks": "^5.1.2",
     "@types/jest": "^26.0.23",
