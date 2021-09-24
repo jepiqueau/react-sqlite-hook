@@ -6,7 +6,7 @@
 <p align="center"><strong><code>Capacitor 3</code></strong></p>
 <br>
 <p align="center">
-  A React Hook to help Capacitor developpers to use <strong><code>@capacitor-community/sqlite@next</code></strong> plugin in React or Ionic/React applications
+  A React Hook to help Capacitor developpers to use <strong><code>@capacitor-community/sqlite@latest</code></strong> plugin in React or Ionic/React applications
 </p>
 
 <br>
@@ -22,7 +22,7 @@
 </p>
 <br>
 
-## @LATEST For Capacitor 3 🚧 (Master)
+## @LATEST For Capacitor 3 (Main)
 
 The `Capacitor3`react-sqlite-hook interfacing the `@capacitor-community/sqlite@latest`
 
@@ -52,35 +52,38 @@ npm install --save-dev react-sqlite-hook@next
 
 | Name                        | Android | iOS | Electron | Web |
 | :-------------------------- | :------ | :-- | :------- | :-- |
-| echo                        | ✅      | ✅   | 🚧       | ❌  |
-| getPlatform                 | ✅      | ✅   | 🚧       | ❌  |
-| getCapacitorSQLite          | ✅      | ✅   | 🚧       | ❌  |
-| addUpgradeStatement         | ✅      | ✅   | 🚧       | ❌  |
-| createConnection            | ✅      | ✅   | 🚧       | ❌  |
-| retrieveConnection          | ✅      | ✅   | 🚧       | ❌  |
-| retrieveAllConnections      | ✅      | ✅   | 🚧       | ❌  |
-| closeConnection             | ✅      | ✅   | 🚧       | ❌  |
-| closeAllConnections         | ✅      | ✅   | 🚧       | ❌  |
-| isConnection                | ✅      | ✅   | 🚧       | ❌  |
-| isDatabase                  | ✅      | ✅   | 🚧       | ❌  |
-| getDatabaseList             | ✅      | ✅   | 🚧       | ❌  |
-| addSQLiteSuffix             | ✅      | ✅   | 🚧       | ❌  |
-| deleteOldDatabases          | ✅      | ✅   | 🚧       | ❌  |
-| importFromJson              | ✅      | ✅   | 🚧       | ❌  |
-| isJsonValid                 | ✅      | ✅   | 🚧       | ❌  |
-| copyFromAssets              | ✅      | ✅   | 🚧       | ❌  |
-| checkConnectionsConsistency | ✅      | ✅   | 🚧       | ❌  |
-| isSecretStored              | ✅      | ✅   | 🚧       | ❌  |
-| setEncryptionSecret         | ✅      | ✅   | 🚧       | ❌  |
-| changeEncryptionSecret      | ✅      | ✅   | 🚧       | ❌  |
+| echo                        | ✅      | ✅   | ✅       | ✅  |
+| getPlatform                 | ✅      | ✅   | ✅       | ✅  |
+| getCapacitorSQLite          | ✅      | ✅   | ✅       | ✅  |
+| addUpgradeStatement         | ✅      | ✅   | ✅       | ✅  |
+| createConnection            | ✅      | ✅   | ✅       | ✅  |
+| retrieveConnection          | ✅      | ✅   | ✅       | ✅  |
+| retrieveAllConnections      | ✅      | ✅   | ✅       | ✅  |
+| closeConnection             | ✅      | ✅   | ✅       | ✅  |
+| closeAllConnections         | ✅      | ✅   | ✅       | ✅  |
+| isConnection                | ✅      | ✅   | ✅       | ✅  |
+| isDatabase                  | ✅      | ✅   | ✅       | ✅  |
+| getDatabaseList             | ✅      | ✅   | ✅       | ✅  |
+| addSQLiteSuffix             | ✅      | ✅   | ❌       | ❌  |
+| deleteOldDatabases          | ✅      | ✅   | ❌       | ❌  |
+| importFromJson              | ✅      | ✅   | ✅       | ✅  |
+| isJsonValid                 | ✅      | ✅   | ✅       | ✅  |
+| copyFromAssets              | ✅      | ✅   | ✅       | ✅  |
+| checkConnectionsConsistency | ✅      | ✅   | ✅       | ✅  |
+| isSecretStored              | ✅      | ✅   | ❌       | ❌  |
+| setEncryptionSecret         | ✅      | ✅   | ❌       | ❌  |
+| changeEncryptionSecret      | ✅      | ✅   | ❌       | ❌  |
+| removeListeners             | ✅      | ✅   | ✅       | ✅  |
+| initWebStore                | ❌      | ❌   | ❌       | ✅  |
+| saveToStore                 | ❌      | ❌   | ❌       | ✅  |
 
 
 ## Supported listeners
 
 | Name             | Android | iOS | Electron | Web |
 | :--------------- | :------ | :-- | :------- | :-- |
-| onProgressImport | ✅      | ✅   | 🚧       | ❌  |
-| onProgressExport | ✅      | ✅   | 🚧       | ❌  |
+| onProgressImport | ✅      | ✅   | 🚧       | ✅  |
+| onProgressExport | ✅      | ✅   | 🚧       | ✅  |
 
 
 ## Documentation

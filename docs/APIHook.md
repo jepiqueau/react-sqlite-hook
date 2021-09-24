@@ -9,6 +9,8 @@
 
 <docgen-index>
 
+* [`initWebStore()`](#initwebstore)
+* [`saveToStore(...)`](#savetostore)
 * [`echo(...)`](#echo)
 * [`getPlatform()`](#getplatform)
 * [`getCapacitorSQLite()`](#getcapacitorsqlite)
@@ -42,6 +44,36 @@
 <!--Update the source file JSDoc comments and rerun docgen to update the docs below-->
 
 SQLite Hook Interface
+
+### initWebStore()
+
+```typescript
+initWebStore() => Promise<void>
+```
+
+Init the web store
+
+**Since:** 2.1.0
+
+--------------------
+
+
+### saveToStore(...)
+
+```typescript
+saveToStore(database: string) => Promise<void>
+```
+
+Save the datbase to the web store
+
+| Param          | Type                |
+| -------------- | ------------------- |
+| **`database`** | <code>string</code> |
+
+**Since:** 2.1.0
+
+--------------------
+
 
 ### echo(...)
 
