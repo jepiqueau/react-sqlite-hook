@@ -22,7 +22,7 @@
 </p>
 <br>
 
-## @LATEST For Capacitor 3 (Main)
+## @LATEST For Capacitor 3 (Master)
 
 The `Capacitor3`react-sqlite-hook interfacing the `@capacitor-community/sqlite@latest`
 
