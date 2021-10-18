@@ -1,3 +1,16 @@
+## 2.1.1 (2021-10-18)
+
+### Chore
+
+- update to @capacitor/core 3.2.4
+- update to @capacitor-community/sqlite 3.2.4
+
+### Added Features
+
+- add `getMigratableDbList` method (iOS, Android)
+- add `dbNameList` paramter to `addSQLiteSuffix`and `deleteOldDatabase`  methods (iOS, Android)
+
+
 ## 2.1.0 (2021-09-25)
 
 ### Chore

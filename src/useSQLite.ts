@@ -120,19 +120,28 @@ export interface SQLiteHook extends AvailableResult {
      */
     getDatabaseList(): Promise<capSQLiteValues>;
     /**
+     * Get Migratable database List
+     * @param folderPath
+     * @returns Promise<capSQLiteValues>
+     * @since 2.1.1
+     */
+    getMigratableDbList(folderPath?: string): Promise<capSQLiteValues>
+     /**
      * Add SQLIte Suffix to existing databases
      * @param folderPath
+     * @param dbNameList since 2.1.1
      * @returns Promise<void>
      * @since 2.0.0
      */
-    addSQLiteSuffix(folderPath?: string): Promise<void>
+    addSQLiteSuffix(folderPath?: string, dbNameList?: string[]): Promise<void>
     /**
      * Delete Old Cordova databases
      * @param folderPath
+     * @param dbNameList since 2.1.1
      * @returns Promise<void>
      * @since 2.0.0
      */
-    deleteOldDatabases(folderPath?: string): Promise<void>;
+    deleteOldDatabases(folderPath?: string, dbNameList?: string[]): Promise<void>;
     /**
      * Import a database From a JSON
      * @param jsonstring string
@@ -416,13 +425,34 @@ export const useSQLite = (onProgress? : SQLiteProps): SQLiteHook  => {
 
     }, [mSQLite]);
     /**
-     * Add SQLIte Suffix to existing databases
+     * Get the migratable database list
      * @param folderPath
+     * 
      */
-    const addSQLiteSuffix = useCallback(async (folderPath?: string): Promise<void> => {
+     const getMigratableDbList = useCallback(async (folderPath?: string): Promise<capSQLiteValues> => {
         const path: string = folderPath ? folderPath : "default"
         try {
-            await mSQLite.addSQLiteSuffix(path);
+            const r = await mSQLite.getMigratableDbList(path);
+            if(r) {
+                return Promise.resolve(r);
+            } else {
+                return Promise.reject("Error in getMigratableDbList");
+            }
+        } catch(err) {
+            return Promise.reject(err);
+        }
+
+    }, [mSQLite]);
+    /**
+     * Add SQLIte Suffix to existing databases
+     * @param folderPath
+     * @param dbNameList
+     */
+    const addSQLiteSuffix = useCallback(async (folderPath?: string, dbNameList?: string[]): Promise<void> => {
+        const path: string = folderPath ? folderPath : "default"
+        const dbList: string[] = dbNameList ? dbNameList : []
+        try {
+            await mSQLite.addSQLiteSuffix(path, dbList);
             return Promise.resolve();
         } catch(err) {
             return Promise.reject(err);
@@ -432,11 +462,13 @@ export const useSQLite = (onProgress? : SQLiteProps): SQLiteHook  => {
     /**
      * Delete Old Cordova databases
      * @param folderPath
+     * @param dbNameList
      */
-    const deleteOldDatabases = useCallback(async (folderPath?: string): Promise<void> => {
+    const deleteOldDatabases = useCallback(async (folderPath?: string, dbNameList?: string[]): Promise<void> => {
         const path: string = folderPath ? folderPath : "default"
+        const dbList: string[] = dbNameList ? dbNameList : []
         try {
-            await mSQLite.deleteOldDatabases(path);
+            await mSQLite.deleteOldDatabases(path, dbList);
             return Promise.resolve();
         } catch(err) {
             return Promise.reject(err);
@@ -647,6 +679,7 @@ export const useSQLite = (onProgress? : SQLiteProps): SQLiteHook  => {
             isConnection: featureNotAvailableError,
             isDatabase: featureNotAvailableError,
             getDatabaseList: featureNotAvailableError,
+            getMigratableDbList: featureNotAvailableError,
             addSQLiteSuffix: featureNotAvailableError,
             deleteOldDatabases: featureNotAvailableError,
             checkConnectionsConsistency: featureNotAvailableError, 
@@ -659,7 +692,7 @@ export const useSQLite = (onProgress? : SQLiteProps): SQLiteHook  => {
         return {echo, getPlatform, getCapacitorSQLite, createConnection, closeConnection,
             retrieveConnection, retrieveAllConnections, closeAllConnections,
             addUpgradeStatement, importFromJson, isJsonValid, copyFromAssets,
-            isConnection, isDatabase, getDatabaseList, addSQLiteSuffix,
+            isConnection, isDatabase, getDatabaseList, getMigratableDbList, addSQLiteSuffix,
             deleteOldDatabases, checkConnectionsConsistency, 
             isSecretStored, setEncryptionSecret, changeEncryptionSecret,
             initWebStore, saveToStore, isAvailable: true};

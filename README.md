@@ -64,6 +64,7 @@ npm install --save-dev react-sqlite-hook@next
 | isConnection                | ✅      | ✅   | ✅       | ✅  |
 | isDatabase                  | ✅      | ✅   | ✅       | ✅  |
 | getDatabaseList             | ✅      | ✅   | ✅       | ✅  |
+| getMigratableDbList         | ✅      | ✅   | ❌       | ❌  |
 | addSQLiteSuffix             | ✅      | ✅   | ❌       | ❌  |
 | deleteOldDatabases          | ✅      | ✅   | ❌       | ❌  |
 | importFromJson              | ✅      | ✅   | ✅       | ✅  |

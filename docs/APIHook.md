@@ -23,6 +23,7 @@
 * [`isConnection(...)`](#isconnection)
 * [`isDatabase(...)`](#isdatabase)
 * [`getDatabaseList()`](#getdatabaselist)
+* [`getMigratableDbList(...)`](#getmigratabledblist)
 * [`addSQLiteSuffix(...)`](#addsqlitesuffix)
 * [`deleteOldDatabases(...)`](#deleteolddatabases)
 * [`importFromJson(...)`](#importfromjson)
@@ -281,17 +282,37 @@ Get the database list
 --------------------
 
 
-### addSQLiteSuffix(...)
+### getMigratableDbList(...)
 
 ```typescript
-addSQLiteSuffix(folderPath?: string | undefined) => Promise<void>
+getMigratableDbList(folderPath?: string | undefined) => Promise<capSQLiteValues>
 ```
 
-Add SQLIte Suffix to existing databases
+Get Migratable database List
 
 | Param            | Type                |
 | ---------------- | ------------------- |
 | **`folderPath`** | <code>string</code> |
+
+**Returns:** <code>Promise&lt;<a href="#capsqlitevalues">capSQLiteValues</a>&gt;</code>
+
+**Since:** 2.1.1
+
+--------------------
+
+
+### addSQLiteSuffix(...)
+
+```typescript
+addSQLiteSuffix(folderPath?: string | undefined, dbNameList?: string[] | undefined) => Promise<void>
+```
+
+Add SQLIte Suffix to existing databases
+
+| Param            | Type                  | Description |
+| ---------------- | --------------------- | ----------- |
+| **`folderPath`** | <code>string</code>   |             |
+| **`dbNameList`** | <code>string[]</code> | since 2.1.1 |
 
 **Since:** 2.0.0
 
@@ -301,14 +322,15 @@ Add SQLIte Suffix to existing databases
 ### deleteOldDatabases(...)
 
 ```typescript
-deleteOldDatabases(folderPath?: string | undefined) => Promise<void>
+deleteOldDatabases(folderPath?: string | undefined, dbNameList?: string[] | undefined) => Promise<void>
 ```
 
 Delete Old Cordova databases
 
-| Param            | Type                |
-| ---------------- | ------------------- |
-| **`folderPath`** | <code>string</code> |
+| Param            | Type                  | Description |
+| ---------------- | --------------------- | ----------- |
+| **`folderPath`** | <code>string</code>   |             |
+| **`dbNameList`** | <code>string[]</code> | since 2.1.1 |
 
 **Since:** 2.0.0
 
