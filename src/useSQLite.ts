@@ -162,7 +162,7 @@ export interface SQLiteHook extends AvailableResult {
      * @returns Promise<void>
      * @since 2.0.0
      */
-    copyFromAssets(): Promise<void>;
+    copyFromAssets(overwrite?: boolean): Promise<void>;
     /**
      * Check the consistency between Js Connections
      * and Native Connections
@@ -592,9 +592,10 @@ export const useSQLite = (onProgress? : SQLiteProps): SQLiteHook  => {
     /**
      * Copy databases from assets to application database folder
      */
-    const copyFromAssets = useCallback(async () : Promise<void> => {
+    const copyFromAssets = useCallback(async (overwrite?: boolean) : Promise<void> => {
+        const mOverwrite = overwrite!= null ? overwrite : true;
         try {
-            await mSQLite.copyFromAssets();
+            await mSQLite.copyFromAssets(overwrite);
             return Promise.resolve();
         } catch (err) {
             return Promise.reject(err);

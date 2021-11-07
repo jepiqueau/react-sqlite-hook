@@ -1,3 +1,14 @@
+## 2.1.2 (2021-11-07)
+
+### Chore
+
+- update to @capacitor/core 3.2.5
+- update to @capacitor-community/sqlite 3.2.5
+
+### Added Features
+
+- add `overwrite` parameter to copyFromAssets method
+
 ## 2.1.1 (2021-10-18)
 
 ### Chore
