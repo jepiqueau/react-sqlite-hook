@@ -1,6 +1,6 @@
 {
   "name": "react-sqlite-hook",
-  "version": "2.1.2",
+  "version": "2.1.3",
   "description": "React Hook for @Capacitor-community/sqlite plugin",
   "repository": {
     "type": "git",
@@ -12,8 +12,8 @@
     "Capacitor",
     "SQLite"
   ],
-  "main": "dist/esm/index.js",
-  "typings": "dist/esm/index.d.ts",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "scripts": {
     "build": "npm run clean && npm run transpile && npm run copy-package",
     "copy-package": "cp ./package.json ./dist/package.json",
