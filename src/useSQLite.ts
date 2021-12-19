@@ -118,7 +118,7 @@ export interface SQLiteHook extends AvailableResult {
      * @param databasePath
      * @param version
      * @returns Promise<capNCDatabasePathResult>
-     * @since 3.3.3-1
+     * @since 2.1.4
      */
     getNCDatabasePath(folderPath: string, database: string): Promise<capNCDatabasePathResult>;
     /**
@@ -126,35 +126,35 @@ export interface SQLiteHook extends AvailableResult {
      * @param databasePath
      * @param version
      * @returns Promise<SQLiteDBConnection>
-     * @since 3.3.3-1
+     * @since 2.1.4
      */
     createNCConnection(databasePath: string, version?: number): Promise<SQLiteDBConnection>;
     /**
      * Retrieve a Non-Conformed database connection
      * @param databasePath
      * @returns Promise<SQLiteDBConnection>
-     * @since 3.3.3-1
+     * @since 2.1.4
      */
     retrieveNCConnection(databasePath: string): Promise<SQLiteDBConnection>;
     /**
      * Close a Non-Conformed database connection
      * @param databasePath
      * @returns Promise<void>
-     * @since 3.3.3-1
+     * @since 2.1.4
      */
     closeNCConnection(databasePath: string): Promise<void>;
     /**
      * Check if Non-Conformed database connection exists
      * @param databasePath
      * @returns Promise<Result>
-     * @since 3.3.3-1
+     * @since 2.1.4
      */
     isNCConnection(databasePath: string): Promise<Result>;
     /**
      * Check if Non-Conformed database exists
      * @param databasePath
      * @returns Promise<Result>
-     * @since 3.3.3-1
+     * @since 2.1.4
      */
     isNCDatabase(databasePath: string): Promise<Result>;
     /**
@@ -709,7 +709,7 @@ export const useSQLite = (onProgress? : SQLiteProps): SQLiteHook  => {
      * @param databasePath
      * @param version
      * @returns Promise<capNCDatabasePathResult>
-     * @since 3.3.3-1
+     * @since 2.1.4
      */
     const getNCDatabasePath = useCallback(async (folderPath: string, database: string): Promise<capNCDatabasePathResult> => {
         if (folderPath == null || folderPath.length === 0) {
@@ -737,6 +737,7 @@ export const useSQLite = (onProgress? : SQLiteProps): SQLiteHook  => {
      * Create a Non-Conformed Database Connection 
      * @param databasePath string
      * @param version number optional
+     * @since 2.1.4
      */  
      const createNCConnection = useCallback(async (databasePath: string, version?: number)
                                 : Promise<SQLiteDBConnection> => {
@@ -760,6 +761,7 @@ export const useSQLite = (onProgress? : SQLiteProps): SQLiteHook  => {
     /**
      * Retrieve a Non-Conformed Database Connection 
      * @param databasePath string
+     * @since 2.1.4
      */
      const retrieveNCConnection = useCallback(async (databasePath: string): Promise<SQLiteDBConnection> => {
         if(databasePath.length > 0) {
@@ -781,6 +783,7 @@ export const useSQLite = (onProgress? : SQLiteProps): SQLiteHook  => {
     /**
      * Close a Non-Conformed Database Connection 
      * @param databasePath string
+     * @since 2.1.4
      */
     const closeNCConnection = useCallback(async (databasePath: string): Promise<void> => {
         if(databasePath.length > 0) {
@@ -797,6 +800,7 @@ export const useSQLite = (onProgress? : SQLiteProps): SQLiteHook  => {
     /**
      * Check if a Non-Conformed Database Connection  exists
      * @param databasePath
+     * @since 2.1.4
      */
      const isNCConnection = useCallback(async (databasePath: string): Promise<Result> => {
         if(databasePath.length > 0) {
@@ -818,6 +822,7 @@ export const useSQLite = (onProgress? : SQLiteProps): SQLiteHook  => {
     /**
      * Check if database exists
      * @param databasePath
+     * @since 2.1.4
      */
     const isNCDatabase = useCallback(async (databasePath: string): Promise<Result> => {
         if(databasePath.length > 0) {

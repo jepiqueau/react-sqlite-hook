@@ -1,3 +1,9 @@
+## 2.1.5 (2021-12-19)
+
+### Bug Fixes
+
+- Fix README.md and some comments
+
 ## 2.1.4 (2021-12-19)
 
 ### Chore

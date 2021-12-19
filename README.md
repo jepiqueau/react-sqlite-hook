@@ -77,6 +77,12 @@ npm install --save-dev react-sqlite-hook@next
 | removeListeners             | ✅      | ✅   | ✅       | ✅  |
 | initWebStore                | ❌      | ❌   | ❌       | ✅  |
 | saveToStore                 | ❌      | ❌   | ❌       | ✅  |
+| getNCDatabasePath           | ✅      | ✅   | ❌       | ❌  |
+| createNCConnection          | ✅      | ✅   | ❌       | ❌  |
+| closeNCConnection           | ✅      | ✅   | ❌       | ❌  |
+| retrieveNCConnection        | ✅      | ✅   | ❌       | ❌  |
+| isNCConnection              | ✅      | ✅   | ❌       | ❌  |
+| isNCDatabase                | ✅      | ✅   | ❌       | ❌  |
 
 
 ## Supported listeners
