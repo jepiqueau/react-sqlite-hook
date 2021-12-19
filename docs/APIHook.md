@@ -22,6 +22,12 @@
 * [`closeAllConnections()`](#closeallconnections)
 * [`isConnection(...)`](#isconnection)
 * [`isDatabase(...)`](#isdatabase)
+* [`getNCDatabasePath(...)`](#getncdatabasepath)
+* [`createNCConnection(...)`](#createncconnection)
+* [`retrieveNCConnection(...)`](#retrievencconnection)
+* [`closeNCConnection(...)`](#closencconnection)
+* [`isNCConnection(...)`](#isncconnection)
+* [`isNCDatabase(...)`](#isncdatabase)
 * [`getDatabaseList()`](#getdatabaselist)
 * [`getMigratableDbList(...)`](#getmigratabledblist)
 * [`addSQLiteSuffix(...)`](#addsqlitesuffix)
@@ -267,6 +273,120 @@ Check if database exists
 --------------------
 
 
+### getNCDatabasePath(...)
+
+```typescript
+getNCDatabasePath(folderPath: string, database: string) => Promise<capNCDatabasePathResult>
+```
+
+Get a Non-Conformed database path
+
+| Param            | Type                |
+| ---------------- | ------------------- |
+| **`folderPath`** | <code>string</code> |
+| **`database`**   | <code>string</code> |
+
+**Returns:** <code>Promise&lt;<a href="#capncdatabasepathresult">capNCDatabasePathResult</a>&gt;</code>
+
+**Since:** 3.3.3-1
+
+--------------------
+
+
+### createNCConnection(...)
+
+```typescript
+createNCConnection(databasePath: string, version?: number | undefined) => Promise<SQLiteDBConnection>
+```
+
+Create a Non-Conformed database connection
+
+| Param              | Type                |
+| ------------------ | ------------------- |
+| **`databasePath`** | <code>string</code> |
+| **`version`**      | <code>number</code> |
+
+**Returns:** <code>Promise&lt;SQLiteDBConnection&gt;</code>
+
+**Since:** 3.3.3-1
+
+--------------------
+
+
+### retrieveNCConnection(...)
+
+```typescript
+retrieveNCConnection(databasePath: string) => Promise<SQLiteDBConnection>
+```
+
+Retrieve a Non-Conformed database connection
+
+| Param              | Type                |
+| ------------------ | ------------------- |
+| **`databasePath`** | <code>string</code> |
+
+**Returns:** <code>Promise&lt;SQLiteDBConnection&gt;</code>
+
+**Since:** 3.3.3-1
+
+--------------------
+
+
+### closeNCConnection(...)
+
+```typescript
+closeNCConnection(databasePath: string) => Promise<void>
+```
+
+Close a Non-Conformed database connection
+
+| Param              | Type                |
+| ------------------ | ------------------- |
+| **`databasePath`** | <code>string</code> |
+
+**Since:** 3.3.3-1
+
+--------------------
+
+
+### isNCConnection(...)
+
+```typescript
+isNCConnection(databasePath: string) => Promise<Result>
+```
+
+Check if Non-Conformed database connection exists
+
+| Param              | Type                |
+| ------------------ | ------------------- |
+| **`databasePath`** | <code>string</code> |
+
+**Returns:** <code>Promise&lt;<a href="#result">Result</a>&gt;</code>
+
+**Since:** 3.3.3-1
+
+--------------------
+
+
+### isNCDatabase(...)
+
+```typescript
+isNCDatabase(databasePath: string) => Promise<Result>
+```
+
+Check if Non-Conformed database exists
+
+| Param              | Type                |
+| ------------------ | ------------------- |
+| **`databasePath`** | <code>string</code> |
+
+**Returns:** <code>Promise&lt;<a href="#result">Result</a>&gt;</code>
+
+**Since:** 3.3.3-1
+
+--------------------
+
+
 ### getDatabaseList()
 
 ```typescript
@@ -505,6 +625,13 @@ Not to use to migrate from GlobalSQLite secret (run setEncryptionSecret)
 | ------------- | -------------------- |
 | **`result`**  | <code>boolean</code> |
 | **`message`** | <code>string</code>  |
+
+
+#### capNCDatabasePathResult
+
+| Prop       | Type                | Description     |
+| ---------- | ------------------- | --------------- |
+| **`path`** | <code>string</code> | String returned |
 
 
 #### capSQLiteValues

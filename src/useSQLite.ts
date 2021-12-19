@@ -4,7 +4,7 @@ import { AvailableResult, notAvailable } from './util/models';
 import { isFeatureAvailable, featureNotAvailableError } 
                                     from './util/feature-check';
 import { CapacitorSQLite, SQLiteDBConnection, SQLiteConnection,
-         capSQLiteChanges, capSQLiteValues } from '@capacitor-community/sqlite';
+         capSQLiteChanges, capSQLiteValues, capNCDatabasePathResult } from '@capacitor-community/sqlite';
 
 export { SQLiteDBConnection }
 
@@ -79,7 +79,7 @@ export interface SQLiteHook extends AvailableResult {
      * @returns Promise<SQLiteDBConnection>
      * @since 2.0.0
      */
-    retrieveConnection(database: string,): Promise<SQLiteDBConnection>;
+    retrieveConnection(database: string): Promise<SQLiteDBConnection>;
     /**
      * Retrieve all database connections
      * @returns Promise<Map<string, SQLiteDBConnection>>
@@ -113,6 +113,50 @@ export interface SQLiteHook extends AvailableResult {
      * @since 2.0.0
      */
     isDatabase(database: string): Promise<Result>;
+    /**
+     * Get a Non-Conformed database path
+     * @param databasePath
+     * @param version
+     * @returns Promise<capNCDatabasePathResult>
+     * @since 3.3.3-1
+     */
+    getNCDatabasePath(folderPath: string, database: string): Promise<capNCDatabasePathResult>;
+    /**
+     * Create a Non-Conformed database connection
+     * @param databasePath
+     * @param version
+     * @returns Promise<SQLiteDBConnection>
+     * @since 3.3.3-1
+     */
+    createNCConnection(databasePath: string, version?: number): Promise<SQLiteDBConnection>;
+    /**
+     * Retrieve a Non-Conformed database connection
+     * @param databasePath
+     * @returns Promise<SQLiteDBConnection>
+     * @since 3.3.3-1
+     */
+    retrieveNCConnection(databasePath: string): Promise<SQLiteDBConnection>;
+    /**
+     * Close a Non-Conformed database connection
+     * @param databasePath
+     * @returns Promise<void>
+     * @since 3.3.3-1
+     */
+    closeNCConnection(databasePath: string): Promise<void>;
+    /**
+     * Check if Non-Conformed database connection exists
+     * @param databasePath
+     * @returns Promise<Result>
+     * @since 3.3.3-1
+     */
+    isNCConnection(databasePath: string): Promise<Result>;
+    /**
+     * Check if Non-Conformed database exists
+     * @param databasePath
+     * @returns Promise<Result>
+     * @since 3.3.3-1
+     */
+    isNCDatabase(databasePath: string): Promise<Result>;
     /**
      * Get the database list
      * @returns Promise<capSQLiteValues>
@@ -660,7 +704,139 @@ export const useSQLite = (onProgress? : SQLiteProps): SQLiteHook  => {
         }
 
     }, [mSQLite]);
+    /**
+     * Get a Non-Conformed database path
+     * @param databasePath
+     * @param version
+     * @returns Promise<capNCDatabasePathResult>
+     * @since 3.3.3-1
+     */
+    const getNCDatabasePath = useCallback(async (folderPath: string, database: string): Promise<capNCDatabasePathResult> => {
+        if (folderPath == null || folderPath.length === 0) {
+            return Promise.reject(new Error('Must provide a folder path'));
+        } 
+        if (database == null || database.length === 0) {
+            return Promise.reject(new Error('Must provide a database name'));
+        } 
+        const mFolderPath: string = folderPath;
+        const mDatabase: string = database;
+        try {
+            const r = await mSQLite.getNCDatabasePath(
+                mFolderPath, mDatabase);
+            if(r) {
+                return Promise.resolve(r);
+            } else {
+                return Promise.reject("No returned database path");
+            } 
+        } catch (err) {
+            return Promise.reject(err);
+        }
 
+    }, [mSQLite]);
+     /**
+     * Create a Non-Conformed Database Connection 
+     * @param databasePath string
+     * @param version number optional
+     */  
+     const createNCConnection = useCallback(async (databasePath: string, version?: number)
+                                : Promise<SQLiteDBConnection> => {
+        if (databasePath == null || databasePath.length === 0) {
+            return Promise.reject(new Error('Must provide a database path'));
+        } 
+        const mDatabasePath: string = databasePath;
+        const mVersion: number = version ? version : 1;
+        try {
+            const r = await mSQLite.createNCConnection(
+                mDatabasePath, mVersion);
+            if(r) {
+                return Promise.resolve(r);
+            } else {
+                return Promise.reject("No returned NC connection");
+            } 
+        } catch (err) {
+            return Promise.reject(err);
+        }
+    }, [mSQLite]);
+    /**
+     * Retrieve a Non-Conformed Database Connection 
+     * @param databasePath string
+     */
+     const retrieveNCConnection = useCallback(async (databasePath: string): Promise<SQLiteDBConnection> => {
+        if(databasePath.length > 0) {
+            try {
+                const r = await mSQLite.retrieveNCConnection(databasePath);
+                if(r) {
+                    return Promise.resolve(r);
+                } else {
+                    return Promise.reject("No returned NC connection");
+                }
+            } catch (err) {
+                return Promise.reject(err);
+            }        
+        } else {
+            return Promise.reject('Must provide a database path');
+        }        
+    }, [mSQLite]);
+
+    /**
+     * Close a Non-Conformed Database Connection 
+     * @param databasePath string
+     */
+    const closeNCConnection = useCallback(async (databasePath: string): Promise<void> => {
+        if(databasePath.length > 0) {
+            try {
+                await mSQLite.closeNCConnection(databasePath);
+                return Promise.resolve();
+            } catch (err) {
+                return Promise.reject(err);
+            }
+        } else {
+            return Promise.reject('Must provide a database path');
+        }
+    }, [mSQLite]);
+    /**
+     * Check if a Non-Conformed Database Connection  exists
+     * @param databasePath
+     */
+     const isNCConnection = useCallback(async (databasePath: string): Promise<Result> => {
+        if(databasePath.length > 0) {
+            try {
+                const r = await mSQLite.isNCConnection(databasePath);
+                if(r) {
+                        return Promise.resolve(r);
+                } else {
+                    return Promise.reject("No returned  NC Connection");
+                }
+            } catch (err) {
+                return Promise.reject(err);
+            } 
+        } else {
+            return Promise.reject('Must provide a database path');
+        }
+
+    }, [mSQLite]);
+    /**
+     * Check if database exists
+     * @param databasePath
+     */
+    const isNCDatabase = useCallback(async (databasePath: string): Promise<Result> => {
+        if(databasePath.length > 0) {
+            try {
+
+                const r = await mSQLite.isNCDatabase(databasePath);
+                if(r) {
+                    return Promise.resolve(r);
+                } else {
+                    return Promise.reject("No returned  NC Connection");
+                }
+            } catch (err) {
+                return Promise.reject(err);
+            }
+        } else {
+            return Promise.reject('Must provide a database path');
+        }
+
+    }, [mSQLite]);
     if (!availableFeaturesN.useSQLite) {
         return {
             initWebStore: featureNotAvailableError,
@@ -679,6 +855,12 @@ export const useSQLite = (onProgress? : SQLiteProps): SQLiteHook  => {
             copyFromAssets: featureNotAvailableError,
             isConnection: featureNotAvailableError,
             isDatabase: featureNotAvailableError,
+            getNCDatabasePath: featureNotAvailableError,
+            createNCConnection: featureNotAvailableError,
+            closeNCConnection: featureNotAvailableError,
+            retrieveNCConnection: featureNotAvailableError,
+            isNCConnection: featureNotAvailableError,
+            isNCDatabase: featureNotAvailableError,
             getDatabaseList: featureNotAvailableError,
             getMigratableDbList: featureNotAvailableError,
             addSQLiteSuffix: featureNotAvailableError,
@@ -696,7 +878,8 @@ export const useSQLite = (onProgress? : SQLiteProps): SQLiteHook  => {
             isConnection, isDatabase, getDatabaseList, getMigratableDbList, addSQLiteSuffix,
             deleteOldDatabases, checkConnectionsConsistency, 
             isSecretStored, setEncryptionSecret, changeEncryptionSecret,
-            initWebStore, saveToStore, isAvailable: true};
+            initWebStore, saveToStore, getNCDatabasePath, createNCConnection,
+            closeNCConnection, retrieveNCConnection, isNCConnection, isNCDatabase, isAvailable: true};
     }
 
 }

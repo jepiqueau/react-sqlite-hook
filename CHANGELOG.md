@@ -1,3 +1,14 @@
+## 2.1.3 (2021-12-19)
+
+### Chore
+
+- update to @capacitor/core 3.3.3
+- update to @capacitor-community/sqlite 3.3.3-1
+
+### Added Features
+
+- add non-conformed database test 
+
 ## 2.1.2 (2021-11-07)
 
 ### Chore
