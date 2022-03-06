@@ -1,6 +1,6 @@
 {
   "name": "react-sqlite-hook",
-  "version": "2.1.5",
+  "version": "2.1.6",
   "description": "React Hook for @Capacitor-community/sqlite plugin",
   "repository": {
     "type": "git",
