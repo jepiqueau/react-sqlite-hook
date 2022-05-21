@@ -42,7 +42,7 @@
     ]
   },
   "peerDependencies": {
-    "@capacitor-community/sqlite": ">= 3.5.0 < 4",
+    "@capacitor-community/sqlite": "3.x",
     "@capacitor/core": "3.x",
     "react": "~17.0.2"
   },
