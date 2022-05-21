@@ -1,3 +1,9 @@
+## 2.1.12 (2022-05-21)
+
+### Bug Fixes
+
+- remove peer-dependencies on @capacitor-community/sqlite
+
 ## 2.1.11 (2022-05-21)
 
 ### Bug Fixes
