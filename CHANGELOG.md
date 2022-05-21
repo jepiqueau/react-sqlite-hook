@@ -1,3 +1,14 @@
+## 2.1.9 (2022-05-21)
+
+### Chore
+
+- update to @capacitor/core 3.5.1
+- update to @capacitor-community/sqlite 3.5.1-1
+
+### Bug Fixes
+
+- fix the peer-dependencies in package.json
+
 ## 2.1.8 (2022-05-09)
 
 ### Chore
