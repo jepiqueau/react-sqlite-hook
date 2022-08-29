@@ -238,7 +238,13 @@ export interface SQLiteHook extends AvailableResult {
      * @returns Promise<void>
      * @since 2.0.2
      */
-    changeEncryptionSecret(passphrase: string, oldpassphrase: string): Promise<void>;  
+    changeEncryptionSecret(passphrase: string, oldpassphrase: string): Promise<void>; 
+    /**
+     * Clear the encrypted secret from secure storage
+     * @returns Promise<void>
+     * @since 3.0.0
+     */ 
+    clearEncryptionSecret(): Promise<void>;   
 
 }
 
@@ -663,6 +669,11 @@ export const useSQLite = (onProgress? : SQLiteProps): SQLiteHook  => {
         }
 
     }, [mSQLite]);
+    /**
+     * Check if secure secret has been stored
+     * @returns Promise<Result>
+     * @since 2.0.2
+     */
     const isSecretStored = useCallback(async (): Promise<Result> => {
         try {
             const r = await mSQLite.isSecretStored();
@@ -676,6 +687,14 @@ export const useSQLite = (onProgress? : SQLiteProps): SQLiteHook  => {
         }
 
     }, [mSQLite]);
+    /**
+     * Set an encrypted secret to secure storage
+     * To run only once
+     * Will migrate from GlobalSQLite secret when required
+     * @param passphrase 
+     * @returns Promise<void>
+     * @since 2.0.2
+    */
     const setEncryptionSecret = useCallback(async (passphrase: string): Promise<void> => {
         if (passphrase == null || passphrase.length === 0) {
             return Promise.reject(new Error('Must provide a passphrase'));
@@ -688,6 +707,14 @@ export const useSQLite = (onProgress? : SQLiteProps): SQLiteHook  => {
         }
 
     }, [mSQLite]);
+    /**
+     * Change encrypted secret from secure storage
+     * Not to use to migrate from GlobalSQLite secret (run setEncryptionSecret)
+     * @param passphrase 
+     * @param oldpassphrase 
+     * @returns Promise<void>
+     * @since 2.0.2
+     */
     const changeEncryptionSecret = useCallback(async (passphrase: string,
         oldpassphrase: string): Promise<void> => {
         if (passphrase == null || passphrase.length === 0) {
@@ -698,6 +725,20 @@ export const useSQLite = (onProgress? : SQLiteProps): SQLiteHook  => {
         } 
         try {
             await mSQLite.changeEncryptionSecret(passphrase, oldpassphrase);
+            return Promise.resolve();
+        } catch(err) {
+            return Promise.reject(err);
+        }
+
+    }, [mSQLite]);
+    /**
+     * Clear the encrypted secret from secure storage
+     * @returns Promise<void>
+     * @since 3.0.0
+     */ 
+     const clearEncryptionSecret = useCallback(async (): Promise<void> => {
+        try {
+            await mSQLite.clearEncryptionSecret();
             return Promise.resolve();
         } catch(err) {
             return Promise.reject(err);
@@ -873,7 +914,8 @@ export const useSQLite = (onProgress? : SQLiteProps): SQLiteHook  => {
             checkConnectionsConsistency: featureNotAvailableError, 
             isSecretStored: featureNotAvailableError,
             setEncryptionSecret: featureNotAvailableError,
-            changeEncryptionSecret: featureNotAvailableError,             
+            changeEncryptionSecret: featureNotAvailableError,
+            clearEncryptionSecret: featureNotAvailableError,              
             ...notAvailable
         };
     } else {
@@ -882,7 +924,7 @@ export const useSQLite = (onProgress? : SQLiteProps): SQLiteHook  => {
             addUpgradeStatement, importFromJson, isJsonValid, copyFromAssets,
             isConnection, isDatabase, getDatabaseList, getMigratableDbList, addSQLiteSuffix,
             deleteOldDatabases, checkConnectionsConsistency, 
-            isSecretStored, setEncryptionSecret, changeEncryptionSecret,
+            isSecretStored, setEncryptionSecret, changeEncryptionSecret, clearEncryptionSecret,
             initWebStore, saveToStore, getNCDatabasePath, createNCConnection,
             closeNCConnection, retrieveNCConnection, isNCConnection, isNCDatabase, isAvailable: true};
     }

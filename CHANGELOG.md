@@ -1,3 +1,14 @@
+## 3.0.0 (2022-08-29)
+
+### Chore
+
+- update to @capacitor/core 4.1.0
+- update to @capacitor-community/sqlite 4.1.0-5
+
+### Added Features
+
+- add clearEncryptionSecret method 
+
 ## 2.1.12 (2022-05-21)
 
 ### Bug Fixes

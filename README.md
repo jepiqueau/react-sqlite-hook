@@ -3,7 +3,7 @@
 <h3 align="center">React Hook for <code>@capacitor-community/sqlite@latest</code> plugin</h3>
 <p align="center"><strong><code>react-sqlite-hook@latest</code></strong></p>
 <br>
-<p align="center"><strong><code>Capacitor 3</code></strong></p>
+<p align="center"><strong><code>Capacitor 4</code></strong></p>
 <br>
 <p align="center">
   A React Hook to help Capacitor developpers to use <strong><code>@capacitor-community/sqlite@latest</code></strong> plugin in React or Ionic/React applications
@@ -11,7 +11,7 @@
 
 <br>
 <p align="center">
-    <img src="https://img.shields.io/maintenance/yes/2021?style=flat-square" />
+    <img src="https://img.shields.io/maintenance/yes/2022?style=flat-square" />
     <a href="https://www.npmjs.com/package/react-sqlite-hook"><img src="https://img.shields.io/npm/l/react-sqlite-hook?style=flat-square" /></a>
 <br>
   <a href="https://www.npmjs.com/package/react-sqlite-hook"><img src="https://img.shields.io/npm/dw/react-sqlite-hook?style=flat-square" /></a>
@@ -22,9 +22,13 @@
 </p>
 <br>
 
-## @LATEST For Capacitor 3 (Master)
+## @LATEST For Capacitor 4 (Master)
 
-The `Capacitor3`react-sqlite-hook interfacing the `@capacitor-community/sqlite@latest`
+The `Capacitor4`react-sqlite-hook interfacing the `@capacitor-community/sqlite@latest`
+
+## For Capacitor 3 (v2.1.12)
+
+The `Capacitor3`react-sqlite-hook interfacing the `@capacitor-community/sqlite@3.7.0`
 
 ## @REFACTOR REFACTOR 🚀 (Move to branch 2.9.x)
 
@@ -74,6 +78,7 @@ npm install --save-dev react-sqlite-hook@next
 | isSecretStored              | ✅      | ✅   | ❌       | ❌  |
 | setEncryptionSecret         | ✅      | ✅   | ❌       | ❌  |
 | changeEncryptionSecret      | ✅      | ✅   | ❌       | ❌  |
+| clearEncryptionSecret       | ✅      | ✅   | ❌       | ❌  |
 | removeListeners             | ✅      | ✅   | ✅       | ✅  |
 | initWebStore                | ❌      | ❌   | ❌       | ✅  |
 | saveToStore                 | ❌      | ❌   | ❌       | ✅  |
