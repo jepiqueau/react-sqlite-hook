@@ -63,8 +63,9 @@ jest.mock('@capacitor-community/sqlite', () => {
                                          mode?: string,
                                          version?: number,
                                          readonly?: boolean): Promise<any> => {
+                        const mReadonly = readonly ? readonly : false;
                         let dbConn: SQLiteDBConnection = new 
-                                            SQLiteDBConnection(dbName,false,CapacitorSQLite)
+                                            SQLiteDBConnection(dbName,mReadonly,CapacitorSQLite)
                         if(dbConn != null) {
                             connDict.set(dbName,dbConn)
                             mIsConnection = true;
