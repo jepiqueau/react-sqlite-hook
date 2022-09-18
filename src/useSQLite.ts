@@ -637,7 +637,7 @@ export const useSQLite = (onProgress? : SQLiteProps): SQLiteHook  => {
         if(upgrade.toVersion === null
             || upgrade.statements === null) {
                 let msg = "Must provide an upgrade statement with ";
-                msg += "fromVersion & toVersion & statement"
+                msg += "toVersion & statements"
                 return Promise.reject(msg);
             }
 
