@@ -1,3 +1,13 @@
+## 3.0.1 (2022-09-18)
+
+### Added Features
+
+- add readonly to connection 
+
+### Bug Fixes
+
+- Fix addUpgradeStatement
+
 ## 3.0.0 (2022-08-29)
 
 ### Chore

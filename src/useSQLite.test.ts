@@ -61,9 +61,10 @@ jest.mock('@capacitor-community/sqlite', () => {
                 createConnection: async (dbName: string,
                                          encrypted?: boolean,
                                          mode?: string,
-                                         version?: number): Promise<any> => {
+                                         version?: number,
+                                         readonly?: boolean): Promise<any> => {
                         let dbConn: SQLiteDBConnection = new 
-                                            SQLiteDBConnection(dbName,CapacitorSQLite)
+                                            SQLiteDBConnection(dbName,false,CapacitorSQLite)
                         if(dbConn != null) {
                             connDict.set(dbName,dbConn)
                             mIsConnection = true;
@@ -72,7 +73,7 @@ jest.mock('@capacitor-community/sqlite', () => {
                             return Promise.reject();
                         }                  
                 },
-                retrieveConnection: async (dbName: string): Promise<SQLiteDBConnection> => {
+                retrieveConnection: async (dbName: string, readonly?: boolean): Promise<SQLiteDBConnection> => {
                     if(mIsConnection) {
                         if(connDict.has(dbName)) {
                             const conn: any = connDict.get(dbName);
@@ -84,7 +85,7 @@ jest.mock('@capacitor-community/sqlite', () => {
                         return Promise.reject("No connection available");
                     }
                 },
-                closeConnection: async (dbName: string): Promise<void> => {
+                closeConnection: async (dbName: string, readonly?: boolean): Promise<void> => {
                     if(mIsConnection) {
                         if(connDict.has(dbName)) {
                             connDict.delete(dbName);
