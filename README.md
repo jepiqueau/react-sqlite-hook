@@ -88,6 +88,7 @@ npm install --save-dev react-sqlite-hook@next
 | retrieveNCConnection        | ✅      | ✅   | ❌       | ❌  |
 | isNCConnection              | ✅      | ✅   | ❌       | ❌  |
 | isNCDatabase                | ✅      | ✅   | ❌       | ❌  |
+| getFromHTTPRequest          | ✅      | ✅   | ✅       | ✅  |
 
 
 ## Supported listeners

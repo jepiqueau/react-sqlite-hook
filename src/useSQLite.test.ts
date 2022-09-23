@@ -185,7 +185,7 @@ it('Check CapacitorSQLite available for electron platform', async () => {
 it('Check CapacitorSQLite available for web platform', async () => {
     const capacitorMock = (Capacitor as any);
     await act(async () => {
-        capacitorMock.init(false, 'web');
+        capacitorMock.init(true, 'web');
     });
     const r = renderHook(() => useSQLite({}));
     await act(async () => {
@@ -194,7 +194,7 @@ it('Check CapacitorSQLite available for web platform', async () => {
     await act(async () => {
       const result = r.result.current;
       const { isAvailable } = result;
-      expect(isAvailable).toBe(false);
+      expect(isAvailable).toBe(true);
     });
 });
 it('Check CapacitorSQLite echo for ios platform', async () => {

@@ -1,3 +1,14 @@
+## 3.0.2 (2022-09-23)
+
+### Added Features
+
+- add getFromHTTPRequest
+
+### Bug Fixes
+
+- Fix FeatureNotAvailableError after upgrading from Capacitor 3 to Capacitor 4 issue#324 of @capacitor-community/sqlite as suggested by 
+Alexander Kristiansen (axkristiansen)
+
 ## 3.0.1 (2022-09-18)
 
 ### Added Features

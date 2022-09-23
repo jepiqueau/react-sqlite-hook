@@ -208,11 +208,20 @@ export interface SQLiteHook extends AvailableResult {
 
     /**
      * Copy databases from assets to application database folder
+     * @param overwrite boolean
      * @returns Promise<void>
      * @since 2.0.0
      */
     copyFromAssets(overwrite?: boolean): Promise<void>;
     /**
+     * Get databases from HTTP request to application database folder
+     * @param url string
+     * @param overwrite boolean
+     * @returns Promise<void>
+     * @since 3.0.2
+     */
+     getFromHTTPRequest(url: string, overwrite?: boolean): Promise<void>;
+     /**
      * Check the consistency between Js Connections
      * and Native Connections
      * if inconsistency all connections are removed
@@ -667,6 +676,18 @@ export const useSQLite = (onProgress? : SQLiteProps): SQLiteHook  => {
         }
     }, [mSQLite]);
     /**
+     * Get databases from HTTP request to application database folder
+     */
+     const getFromHTTPRequest = useCallback(async (url: string, overwrite?: boolean) : Promise<void> => {
+        const mOverwrite = overwrite!= null ? overwrite : true;
+        try {
+            await mSQLite.getFromHTTPRequest(url, overwrite);
+            return Promise.resolve();
+        } catch (err) {
+            return Promise.reject(err);
+        }
+    }, [mSQLite]);
+    /**
      * Check the consistency between Js Connections
      * and Native Connections
      * if inconsistency all connections are removed
@@ -914,6 +935,7 @@ export const useSQLite = (onProgress? : SQLiteProps): SQLiteHook  => {
             importFromJson: featureNotAvailableError,
             isJsonValid: featureNotAvailableError,
             copyFromAssets: featureNotAvailableError,
+            getFromHTTPRequest: featureNotAvailableError,
             isConnection: featureNotAvailableError,
             isDatabase: featureNotAvailableError,
             getNCDatabasePath: featureNotAvailableError,
@@ -936,7 +958,7 @@ export const useSQLite = (onProgress? : SQLiteProps): SQLiteHook  => {
     } else {
         return {echo, getPlatform, getCapacitorSQLite, createConnection, closeConnection,
             retrieveConnection, retrieveAllConnections, closeAllConnections,
-            addUpgradeStatement, importFromJson, isJsonValid, copyFromAssets,
+            addUpgradeStatement, importFromJson, isJsonValid, copyFromAssets, getFromHTTPRequest,
             isConnection, isDatabase, getDatabaseList, getMigratableDbList, addSQLiteSuffix,
             deleteOldDatabases, checkConnectionsConsistency, 
             isSecretStored, setEncryptionSecret, changeEncryptionSecret, clearEncryptionSecret,

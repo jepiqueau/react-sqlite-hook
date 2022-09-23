@@ -46,7 +46,7 @@
     "react": "~17.0.2"
   },
   "devDependencies": {
-    "@capacitor-community/sqlite": "^4.1.0",
+    "@capacitor-community/sqlite": "^4.1.1",
     "@capacitor/core": "^4.1.0",
     "@capacitor/docgen": "0.0.17",
     "@testing-library/react-hooks": "^7.0.2",
