@@ -1,4 +1,14 @@
+## 3.1.0 (2022-09-24)
+
+### Chore
+
+- update to react@18.2.0
+
 ## 3.0.2 (2022-09-23)
+
+### Chore
+
+- update to @capacitor-community/sqlite@4.1.1
 
 ### Added Features
 
