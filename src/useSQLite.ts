@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useEffect } from 'react';
+import { useCallback, useMemo, useEffect, useRef } from 'react';
 import { Capacitor } from '@capacitor/core';
 import { AvailableResult, notAvailable } from './util/models';
 import { isFeatureAvailable, featureNotAvailableError } 
@@ -287,13 +287,16 @@ export const useSQLite = (onProgress? : SQLiteProps): SQLiteHook  => {
     const mSQLite = useMemo(() => {
         return new SQLiteConnection(sqlitePlugin);
     },[sqlitePlugin])
+    const listenerHasChangedRef = useRef(false);
 
     useEffect(() => {
         // init Listeners
         let importListener: any = null;
         let exportListener: any = null;    
         if(platform != "electron") {   
-            if( onProgress ) { 
+            if( onProgress && listenerHasChangedRef.current === false) { 
+                console.log(`in onProgress add listeners `)
+                listenerHasChangedRef.current = true;
                 if(onProgress.onProgressImport && sqlitePlugin) importListener =
                     sqlitePlugin.addListener('sqliteImportProgressEvent',
                     (e: any) => {
@@ -309,9 +312,11 @@ export const useSQLite = (onProgress? : SQLiteProps): SQLiteHook  => {
                 }
             }
         return () => {
-            if(platform != "electron") {   
-                if(importListener) importListener.remove();
-                if(exportListener) exportListener.remove();
+            if(platform != "electron") {  
+                console.log(`in return remove listeners `)
+                if( listenerHasChangedRef.current === true) {
+                    sqlitePlugin.removeAllListeners();
+                }
             }
         }
     }, []);

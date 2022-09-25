@@ -1,3 +1,9 @@
+## 3.1.1 (2022-09-25)
+
+### Bug Fixes
+
+- Fix listeners in useEffect
+
 ## 3.1.0 (2022-09-24)
 
 ### Chore
