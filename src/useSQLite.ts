@@ -119,6 +119,26 @@ export interface SQLiteHook extends AvailableResult {
      */
     isDatabase(database: string): Promise<Result>;
     /**
+     * Check if a SQLite database is encrypted
+     * @param database
+     * @returns Promise<Result>
+     * @since 3.2.0
+     */
+    isDatabaseEncrypted(database: string): Promise<Result>;
+    /**
+     * Check encryption value in capacitor.config
+     * @returns Promise<Result>
+     * @since 3.2.0
+     */
+    isInConfigEncryption(): Promise<Result>;
+    /**
+     * Check encryption value in capacitor.config
+     * @returns Promise<Result>
+     * @since 3.2.0
+     */
+    isInConfigBiometricAuth(): Promise<Result>;
+
+    /**
      * Get a Non-Conformed database path
      * @param databasePath
      * @param version
@@ -259,6 +279,21 @@ export interface SQLiteHook extends AvailableResult {
      * @since 3.0.0
      */ 
     clearEncryptionSecret(): Promise<void>;   
+    /**
+     * Check encryption passphrase
+     *
+     * @param passphrase 
+     * @return Promise<Result>
+     * @since 3.2.0
+     */
+    checkEncryptionSecret(passphrase: string): Promise<Result>;
+    /**
+     * Moves databases to the location the plugin can read them, and adds sqlite suffix
+     * This resembles calling addSQLiteSuffix and deleteOldDatabases, but it is more performant as it doesn't copy but moves the files
+     * @param folderPath the origin from where to move the databases
+     * @param dbNameList the names of the databases to move, check out the getMigratableDbList to get a list, an empty list will result in copying all the databases with '.db' extension.
+     */
+    moveDatabasesAndAddSuffix(folderPath?: string, dbNameList?: string[],): Promise<void>;
 
 }
 
@@ -483,6 +518,66 @@ export const useSQLite = (onProgress? : SQLiteProps): SQLiteHook  => {
         }
 
     }, [mSQLite]);
+    /**
+     * Check if a SQLite database is encrypted
+     * @param database
+     * @returns Promise<Result>
+     * @since 3.2.0
+     */
+    const isDatabaseEncrypted = useCallback(async (dbName: string): Promise<Result> => {
+        if(dbName.length > 0) {
+            try {
+
+                const r = await mSQLite.isDatabaseEncrypted(dbName);
+                if(r) {
+                    return Promise.resolve(r);
+                } else {
+                    return Promise.reject("Error in isDatabaseEncrypted");
+                }
+            } catch (err) {
+                return Promise.reject(err);
+            }
+        } else {
+            return Promise.reject('Must provide a database name');
+        }
+    }, [mSQLite]);
+    /**
+     * Check encryption value in capacitor.config
+     * @returns Promise<Result>
+     * @since 3.2.0
+     */
+    const isInConfigEncryption = useCallback(async (): Promise<Result> => {
+        try {
+
+            const r = await mSQLite.isInConfigEncryption();
+            if(r) {
+                return Promise.resolve(r);
+            } else {
+                return Promise.reject("Error in isInConfigEncryption");
+            }
+        } catch (err) {
+            return Promise.reject(err);
+        }
+    }, [mSQLite]);
+    /**
+     * Check encryption value in capacitor.config
+     * @returns Promise<Result>
+     * @since 3.2.0
+     */
+    const isInConfigBiometricAuth = useCallback(async (): Promise<Result> => {
+        try {
+
+            const r = await mSQLite.isInConfigBiometricAuth();
+            if(r) {
+                return Promise.resolve(r);
+            } else {
+                return Promise.reject("Error in isInConfigBiometricAuth");
+            }
+        } catch (err) {
+            return Promise.reject(err);
+        }
+    }, [mSQLite]);
+    
     /**
      * Get the database list
      * @returns Promise<capSQLiteValues>
@@ -787,6 +882,26 @@ export const useSQLite = (onProgress? : SQLiteProps): SQLiteHook  => {
 
     }, [mSQLite]);
     /**
+     * Check Encryption Secret
+     * 
+     * @param passphrase 
+     * @returns Promise<Result>
+     * @since 3.2.0
+     */
+    const checkEncryptionSecret = useCallback( async(passphrase: string): Promise<Result> => {
+        try {
+            const r = await mSQLite.checkEncryptionSecret(passphrase);
+            if(r) {
+                return Promise.resolve(r);
+            } else {
+                return Promise.reject('Error in checkEncryptionSecret');
+            } 
+        } catch (err) {
+            return Promise.reject(err);
+        }
+
+    }, [mSQLite]);
+    /**
      * Get a Non-Conformed database path
      * @param databasePath
      * @param version
@@ -924,6 +1039,24 @@ export const useSQLite = (onProgress? : SQLiteProps): SQLiteHook  => {
         }
 
     }, [mSQLite]);
+    /**
+     * Moves databases to the location the plugin can read them, and adds sqlite suffix
+     * This resembles calling addSQLiteSuffix and deleteOldDatabases, but it is more performant as it doesn't copy but moves the files
+     * @param folderPath the origin from where to move the databases
+     * @param dbNameList the names of the databases to move, check out the getMigratableDbList to get a list, an empty list will result in copying all the databases with '.db' extension.
+     */
+    const moveDatabasesAndAddSuffix = useCallback(async (folderPath?: string, dbNameList?: string[],): Promise<void> => {
+        const path: string = folderPath ? folderPath : 'default';
+        const dbList: string[] = dbNameList ? dbNameList : [];
+        try {
+            await mSQLite.moveDatabasesAndAddSuffix(path, dbList);
+            return Promise.resolve();
+        } catch(err) {
+            return Promise.reject(err);
+        }
+    
+    }, [mSQLite]);
+
     if (!availableFeaturesN.useSQLite) {
         return {
             initWebStore: featureNotAvailableError,
@@ -953,11 +1086,16 @@ export const useSQLite = (onProgress? : SQLiteProps): SQLiteHook  => {
             getMigratableDbList: featureNotAvailableError,
             addSQLiteSuffix: featureNotAvailableError,
             deleteOldDatabases: featureNotAvailableError,
-            checkConnectionsConsistency: featureNotAvailableError, 
+            checkConnectionsConsistency: featureNotAvailableError,
             isSecretStored: featureNotAvailableError,
             setEncryptionSecret: featureNotAvailableError,
             changeEncryptionSecret: featureNotAvailableError,
-            clearEncryptionSecret: featureNotAvailableError,              
+            clearEncryptionSecret: featureNotAvailableError,
+            checkEncryptionSecret: featureNotAvailableError,
+            moveDatabasesAndAddSuffix: featureNotAvailableError,
+            isInConfigEncryption: featureNotAvailableError,
+            isInConfigBiometricAuth: featureNotAvailableError,
+            isDatabaseEncrypted: featureNotAvailableError,            
             ...notAvailable
         };
     } else {
@@ -966,9 +1104,11 @@ export const useSQLite = (onProgress? : SQLiteProps): SQLiteHook  => {
             addUpgradeStatement, importFromJson, isJsonValid, copyFromAssets, getFromHTTPRequest,
             isConnection, isDatabase, getDatabaseList, getMigratableDbList, addSQLiteSuffix,
             deleteOldDatabases, checkConnectionsConsistency, 
-            isSecretStored, setEncryptionSecret, changeEncryptionSecret, clearEncryptionSecret,
+            isSecretStored, setEncryptionSecret, changeEncryptionSecret,
+            clearEncryptionSecret, checkEncryptionSecret, moveDatabasesAndAddSuffix,
             initWebStore, saveToStore, getNCDatabasePath, createNCConnection,
-            closeNCConnection, retrieveNCConnection, isNCConnection, isNCDatabase, isAvailable: true};
+            closeNCConnection, retrieveNCConnection, isNCConnection, isNCDatabase,
+            isInConfigEncryption, isInConfigBiometricAuth, isDatabaseEncrypted, isAvailable: true};
     }
 
 }

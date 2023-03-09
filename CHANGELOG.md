@@ -1,3 +1,15 @@
+## 3.2.0 (2023-03-09)
+
+### Chore
+
+- update to @capacitor/core@4.6.3
+- update to @capacitor-community/sqlite@4.6.3-1
+
+### Added Features
+
+ -  checkEncryptionSecret, moveDatabasesAndAddSuffix
+ -  isDatabaseEncrypted, isInConfigEncryption, isInConfigBiometricAuth
+ 
 ## 3.1.1 (2022-09-25)
 
 ### Bug Fixes

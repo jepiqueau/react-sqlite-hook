@@ -22,6 +22,9 @@
 * [`closeAllConnections()`](#closeallconnections)
 * [`isConnection(...)`](#isconnection)
 * [`isDatabase(...)`](#isdatabase)
+* [`isDatabaseEncrypted(...)`](#isdatabaseencrypted)
+* [`isInConfigEncryption()`](#isinconfigencryption)
+* [`isInConfigBiometricAuth()`](#isinconfigbiometricauth)
 * [`getNCDatabasePath(...)`](#getncdatabasepath)
 * [`createNCConnection(...)`](#createncconnection)
 * [`retrieveNCConnection(...)`](#retrievencconnection)
@@ -35,10 +38,14 @@
 * [`importFromJson(...)`](#importfromjson)
 * [`isJsonValid(...)`](#isjsonvalid)
 * [`copyFromAssets(...)`](#copyfromassets)
+* [`getFromHTTPRequest(...)`](#getfromhttprequest)
 * [`checkConnectionsConsistency()`](#checkconnectionsconsistency)
 * [`isSecretStored()`](#issecretstored)
 * [`setEncryptionSecret(...)`](#setencryptionsecret)
 * [`changeEncryptionSecret(...)`](#changeencryptionsecret)
+* [`clearEncryptionSecret()`](#clearencryptionsecret)
+* [`checkEncryptionSecret(...)`](#checkencryptionsecret)
+* [`moveDatabasesAndAddSuffix(...)`](#movedatabasesandaddsuffix)
 * [Interfaces](#interfaces)
 
 </docgen-index>
@@ -139,10 +146,10 @@ addUpgradeStatement(dbName: string, upgrade: VersionUpgrade) => Promise<void>
 
 Add an Upgrade Statement to Update Database Version
 
-| Param         | Type                                                      | Description       |
-| ------------- | --------------------------------------------------------- | ----------------- |
-| **`dbName`**  | <code>string</code>                                       | database name     |
-| **`upgrade`** | <code><a href="#versionupgrade">VersionUpgrade</a></code> | upgrade statement |
+| Param         | Type                                                      | Description                            |
+| ------------- | --------------------------------------------------------- | -------------------------------------- |
+| **`dbName`**  | <code>string</code>                                       | database name                          |
+| **`upgrade`** | <code><a href="#versionupgrade">VersionUpgrade</a></code> | upgrade statement modified since 3.0.1 |
 
 **Since:** 2.0.0
 
@@ -152,17 +159,18 @@ Add an Upgrade Statement to Update Database Version
 ### createConnection(...)
 
 ```typescript
-createConnection(database: string, encrypted?: boolean | undefined, mode?: string | undefined, version?: number | undefined) => Promise<SQLiteDBConnection>
+createConnection(database: string, encrypted?: boolean | undefined, mode?: string | undefined, version?: number | undefined, readonly?: boolean | undefined) => Promise<SQLiteDBConnection>
 ```
 
 Create a connection to a database
 
-| Param           | Type                 |
-| --------------- | -------------------- |
-| **`database`**  | <code>string</code>  |
-| **`encrypted`** | <code>boolean</code> |
-| **`mode`**      | <code>string</code>  |
-| **`version`**   | <code>number</code>  |
+| Param           | Type                 | Description |
+| --------------- | -------------------- | ----------- |
+| **`database`**  | <code>string</code>  |             |
+| **`encrypted`** | <code>boolean</code> |             |
+| **`mode`**      | <code>string</code>  |             |
+| **`version`**   | <code>number</code>  |             |
+| **`readonly`**  | <code>boolean</code> | since 3.0.1 |
 
 **Returns:** <code>Promise&lt;SQLiteDBConnection&gt;</code>
 
@@ -174,14 +182,15 @@ Create a connection to a database
 ### retrieveConnection(...)
 
 ```typescript
-retrieveConnection(database: string) => Promise<SQLiteDBConnection>
+retrieveConnection(database: string, readonly?: boolean | undefined) => Promise<SQLiteDBConnection>
 ```
 
 Retrieve an existing database connection
 
-| Param          | Type                |
-| -------------- | ------------------- |
-| **`database`** | <code>string</code> |
+| Param          | Type                 | Description |
+| -------------- | -------------------- | ----------- |
+| **`database`** | <code>string</code>  |             |
+| **`readonly`** | <code>boolean</code> | since 3.0.1 |
 
 **Returns:** <code>Promise&lt;SQLiteDBConnection&gt;</code>
 
@@ -208,14 +217,15 @@ Retrieve all database connections
 ### closeConnection(...)
 
 ```typescript
-closeConnection(database: string) => Promise<void>
+closeConnection(database: string, readonly?: boolean | undefined) => Promise<void>
 ```
 
 Close a database connection
 
-| Param          | Type                |
-| -------------- | ------------------- |
-| **`database`** | <code>string</code> |
+| Param          | Type                 | Description |
+| -------------- | -------------------- | ----------- |
+| **`database`** | <code>string</code>  |             |
+| **`readonly`** | <code>boolean</code> | since 3.0.1 |
 
 **Since:** 2.0.0
 
@@ -238,14 +248,15 @@ Close all database connections
 ### isConnection(...)
 
 ```typescript
-isConnection(database: string) => Promise<Result>
+isConnection(database: string, readonly?: boolean | undefined) => Promise<Result>
 ```
 
 Check if database connection exists
 
-| Param          | Type                |
-| -------------- | ------------------- |
-| **`database`** | <code>string</code> |
+| Param          | Type                 | Description |
+| -------------- | -------------------- | ----------- |
+| **`database`** | <code>string</code>  |             |
+| **`readonly`** | <code>boolean</code> | since 3.0.1 |
 
 **Returns:** <code>Promise&lt;<a href="#result">Result</a>&gt;</code>
 
@@ -273,6 +284,55 @@ Check if database exists
 --------------------
 
 
+### isDatabaseEncrypted(...)
+
+```typescript
+isDatabaseEncrypted(database: string) => Promise<Result>
+```
+
+Check if a SQLite database is encrypted
+
+| Param          | Type                |
+| -------------- | ------------------- |
+| **`database`** | <code>string</code> |
+
+**Returns:** <code>Promise&lt;<a href="#result">Result</a>&gt;</code>
+
+**Since:** 3.2.0
+
+--------------------
+
+
+### isInConfigEncryption()
+
+```typescript
+isInConfigEncryption() => Promise<Result>
+```
+
+Check encryption value in capacitor.config
+
+**Returns:** <code>Promise&lt;<a href="#result">Result</a>&gt;</code>
+
+**Since:** 3.2.0
+
+--------------------
+
+
+### isInConfigBiometricAuth()
+
+```typescript
+isInConfigBiometricAuth() => Promise<Result>
+```
+
+Check encryption value in capacitor.config
+
+**Returns:** <code>Promise&lt;<a href="#result">Result</a>&gt;</code>
+
+**Since:** 3.2.0
+
+--------------------
+
+
 ### getNCDatabasePath(...)
 
 ```typescript
@@ -288,7 +348,7 @@ Get a Non-Conformed database path
 
 **Returns:** <code>Promise&lt;<a href="#capncdatabasepathresult">capNCDatabasePathResult</a>&gt;</code>
 
-**Since:** 3.3.3-1
+**Since:** 2.1.4
 
 --------------------
 
@@ -308,7 +368,7 @@ Create a Non-Conformed database connection
 
 **Returns:** <code>Promise&lt;SQLiteDBConnection&gt;</code>
 
-**Since:** 3.3.3-1
+**Since:** 2.1.4
 
 --------------------
 
@@ -327,7 +387,7 @@ Retrieve a Non-Conformed database connection
 
 **Returns:** <code>Promise&lt;SQLiteDBConnection&gt;</code>
 
-**Since:** 3.3.3-1
+**Since:** 2.1.4
 
 --------------------
 
@@ -344,7 +404,7 @@ Close a Non-Conformed database connection
 | ------------------ | ------------------- |
 | **`databasePath`** | <code>string</code> |
 
-**Since:** 3.3.3-1
+**Since:** 2.1.4
 
 --------------------
 
@@ -363,7 +423,7 @@ Check if Non-Conformed database connection exists
 
 **Returns:** <code>Promise&lt;<a href="#result">Result</a>&gt;</code>
 
-**Since:** 3.3.3-1
+**Since:** 2.1.4
 
 --------------------
 
@@ -382,7 +442,7 @@ Check if Non-Conformed database exists
 
 **Returns:** <code>Promise&lt;<a href="#result">Result</a>&gt;</code>
 
-**Since:** 3.3.3-1
+**Since:** 2.1.4
 
 --------------------
 
@@ -503,11 +563,29 @@ copyFromAssets(overwrite?: boolean | undefined) => Promise<void>
 
 Copy databases from assets to application database folder
 
-| Param           | Type                 |
-| --------------- | -------------------- |
-| **`overwrite`** | <code>boolean</code> |
+| Param           | Type                 | Description |
+| --------------- | -------------------- | ----------- |
+| **`overwrite`** | <code>boolean</code> | boolean     |
 
 **Since:** 2.0.0
+
+--------------------
+
+
+### getFromHTTPRequest(...)
+
+```typescript
+getFromHTTPRequest(url: string, overwrite?: boolean | undefined) => Promise<void>
+```
+
+Get databases from HTTP request to application database folder
+
+| Param           | Type                 | Description |
+| --------------- | -------------------- | ----------- |
+| **`url`**       | <code>string</code>  | string      |
+| **`overwrite`** | <code>boolean</code> | boolean     |
+
+**Since:** 3.0.2
 
 --------------------
 
@@ -582,25 +660,64 @@ Not to use to migrate from GlobalSQLite secret (run setEncryptionSecret)
 --------------------
 
 
+### clearEncryptionSecret()
+
+```typescript
+clearEncryptionSecret() => Promise<void>
+```
+
+Clear the encrypted secret from secure storage
+
+**Since:** 3.0.0
+
+--------------------
+
+
+### checkEncryptionSecret(...)
+
+```typescript
+checkEncryptionSecret(passphrase: string) => Promise<Result>
+```
+
+Check encryption passphrase
+
+| Param            | Type                |
+| ---------------- | ------------------- |
+| **`passphrase`** | <code>string</code> |
+
+**Returns:** <code>Promise&lt;<a href="#result">Result</a>&gt;</code>
+
+**Since:** 3.2.0
+
+--------------------
+
+
+### moveDatabasesAndAddSuffix(...)
+
+```typescript
+moveDatabasesAndAddSuffix(folderPath?: string | undefined, dbNameList?: string[] | undefined) => Promise<void>
+```
+
+Moves databases to the location the plugin can read them, and adds sqlite suffix
+This resembles calling addSQLiteSuffix and deleteOldDatabases, but it is more performant as it doesn't copy but moves the files
+
+| Param            | Type                  | Description                                                                                                                                                       |
+| ---------------- | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`folderPath`** | <code>string</code>   | the origin from where to move the databases                                                                                                                       |
+| **`dbNameList`** | <code>string[]</code> | the names of the databases to move, check out the getMigratableDbList to get a list, an empty list will result in copying all the databases with '.db' extension. |
+
+--------------------
+
+
 ### Interfaces
 
 
 #### VersionUpgrade
 
-| Prop              | Type                 |
-| ----------------- | -------------------- |
-| **`fromVersion`** | <code>number</code>  |
-| **`toVersion`**   | <code>number</code>  |
-| **`statement`**   | <code>string</code>  |
-| **`set`**         | <code>MySet[]</code> |
-
-
-#### MySet
-
-| Prop            | Type                |
-| --------------- | ------------------- |
-| **`statement`** | <code>string</code> |
-| **`values`**    | <code>any[]</code>  |
+| Prop             | Type                  |
+| ---------------- | --------------------- |
+| **`toVersion`**  | <code>number</code>   |
+| **`statements`** | <code>string[]</code> |
 
 
 #### Map
@@ -636,9 +753,9 @@ Not to use to migrate from GlobalSQLite secret (run setEncryptionSecret)
 
 #### capSQLiteValues
 
-| Prop         | Type               | Description                      |
-| ------------ | ------------------ | -------------------------------- |
-| **`values`** | <code>any[]</code> | the data values list as an Array |
+| Prop         | Type               | Description                                                                              |
+| ------------ | ------------------ | ---------------------------------------------------------------------------------------- |
+| **`values`** | <code>any[]</code> | the data values list as an Array iOS the first row is the returned ios_columns name list |
 
 
 #### capSQLiteChanges
