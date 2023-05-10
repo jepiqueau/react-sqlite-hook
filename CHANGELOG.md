@@ -1,3 +1,10 @@
+## 3.2.1 (2023-05-10)
+
+### Chore
+
+- update to @capacitor/core@4.8.0
+- update to @capacitor-community/sqlite@4.8.0-0
+
 ## 3.2.0 (2023-03-09)
 
 ### Chore

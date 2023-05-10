@@ -42,12 +42,11 @@
     ]
   },
   "peerDependencies": {
-    "@capacitor/core": "^4.0.0",
     "react": "^18.0.0"
   },
   "devDependencies": {
-    "@capacitor-community/sqlite": "^4.6.3-1",
-    "@capacitor/core": "^4.6.3",
+    "@capacitor-community/sqlite": "^4.8.0-0",
+    "@capacitor/core": "^4.8.0",
     "@capacitor/docgen": "0.0.17",
     "@testing-library/react-hooks": "^7.0.2",
     "@types/jest": "^27.4.1",
