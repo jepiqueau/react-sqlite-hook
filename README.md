@@ -1,12 +1,12 @@
 <p align="center"><br><img src="https://avatars3.githubusercontent.com/u/16580653?v=4" width="128" height="128" /></p>
 
 <h3 align="center">React Hook for <code>@capacitor-community/sqlite@latest</code> plugin</h3>
-<p align="center"><strong><code>react-sqlite-hook@latest</code></strong></p>
+<p align="center"><strong><code>react-sqlite-hook@next</code></strong></p>
 <br>
-<p align="center"><strong><code>Capacitor 4</code></strong></p>
+<p align="center"><strong><code>Capacitor 5</code></strong></p>
 <br>
 <p align="center">
-  A React Hook to help Capacitor developpers to use <strong><code>@capacitor-community/sqlite@latest</code></strong> plugin in React or Ionic/React applications
+  A React Hook to help Capacitor developpers to use <strong><code>@capacitor-community/sqlite@next</code></strong> plugin in React or Ionic/React applications
 </p>
 
 <br>
@@ -21,6 +21,10 @@
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 </p>
 <br>
+
+## @NEXT For Capacitor 5 (next5)
+
+The `Capacitor5`react-sqlite-hook interfacing the `@capacitor-community/sqlite@next`
 
 ## @LATEST For Capacitor 4 (Master)
 
@@ -48,10 +52,20 @@ The `initial` react-sqlite-hook interfacing the `@capacitor-community/sqlite@ini
 
 ## Installation
 
+- Capacitor 5
+
 ```bash
 npm install --save @capacitor-community/sqlite@next
 npm install --save-dev react-sqlite-hook@next
 ```
+
+- Capacitor 4
+
+```bash
+npm install --save @capacitor-community/sqlite@latest
+npm install --save-dev react-sqlite-hook@latest
+```
+
 ## Supported methods
 
 | Name                        | Android | iOS | Electron | Web |
