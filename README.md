@@ -11,7 +11,7 @@
 
 <br>
 <p align="center">
-    <img src="https://img.shields.io/maintenance/yes/2022?style=flat-square" />
+    <img src="https://img.shields.io/maintenance/yes/2023?style=flat-square" />
     <a href="https://www.npmjs.com/package/react-sqlite-hook"><img src="https://img.shields.io/npm/l/react-sqlite-hook?style=flat-square" /></a>
 <br>
   <a href="https://www.npmjs.com/package/react-sqlite-hook"><img src="https://img.shields.io/npm/dw/react-sqlite-hook?style=flat-square" /></a>
